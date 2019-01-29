@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-ene-2019 16:14:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJO.ReservaBackup" table="reserva_backup" catalog="autobus_obb" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tarjeta" class="POJO.Tarjeta" fetch="select">
+            <column name="idTarjeta" />
+        </many-to-one>
+        <many-to-one name="viaje" class="POJO.Viaje" fetch="select">
+            <column name="idViaje" />
+        </many-to-one>
+        <property name="localizador" type="java.lang.Integer">
+            <column name="localizador" />
+        </property>
+        <property name="precio" type="java.lang.Double">
+            <column name="precio" precision="22" scale="0" />
+        </property>
+        <property name="fechaPago" type="date">
+            <column name="fechaPago" length="10" />
+        </property>
+        <property name="numViajeros" type="java.lang.Integer">
+            <column name="numViajeros" />
+        </property>
+        <set name="ocupacionBackups" table="ocupacion_backup" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idReserva" />
+            </key>
+            <one-to-many class="POJO.OcupacionBackup" />
+        </set>
+    </class>
+</hibernate-mapping>

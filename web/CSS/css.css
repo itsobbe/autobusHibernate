@@ -1,0 +1,30 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-ene-2019, 14:06:09
+    Author     : owa_7
+*/
+
+body, html {
+/*  height: 100% !important;*/
+  min-height: 100%;
+}
+
+.bg {
+  /* The image used */
+  /* Center and scale the image nicely */
+  background-image: url("imagen/busfondo.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /* Full height */
+  height: 100%;
+ 
+}
+.jumbotron { background-size: cover !important;
+            background-position: center !important;
+}

@@ -1,0 +1,8 @@
+//sacando todos los datos viaje
+SELECT r, v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=1 AND v.fechaViaje='2019-01-17' AND h = v.horario
+
+--- me saca mal los datos
+-----------//otra parece que funciona
+select ruta0_.id as col_0_0_, viaje1_.id as col_1_0_ from autobus_obb.ruta ruta0_, autobus_obb.viaje viaje1_, autobus_obb.horario horario2_ where (ruta0_.estacionOrigen=1 )AND(ruta0_.estacionDestino=3 )AND(viaje1_.fechaViaje='2019-01-17' )AND(horario2_.id=viaje1_.idHorarioViaje )AND(horario2_.idRuta=ruta0_.id )
+SELECT r, v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=3 AND v.fechaViaje='2019-01-17' AND h = v.horario AND h.ruta=r
+(tener cuidado con los datos en las tablas, tienen que tener coherencia )

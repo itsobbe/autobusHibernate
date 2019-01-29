@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 23-ene-2019 16:14:25 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJO.Tarjeta" table="tarjeta" catalog="autobus_obb" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="POJO.Cliente" fetch="select">
+            <column name="idCliente" />
+        </many-to-one>
+        <property name="tipo" type="string">
+            <column name="tipo" length="11" />
+        </property>
+        <property name="numero" type="java.lang.Integer">
+            <column name="numero" unique="true" />
+        </property>
+        <property name="caducidad" type="string">
+            <column name="caducidad" length="50" />
+        </property>
+        <property name="logoTarjeta" type="string">
+            <column name="logoTarjeta" length="50" />
+        </property>
+        <set name="reservaBackups" table="reserva_backup" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idTarjeta" />
+            </key>
+            <one-to-many class="POJO.ReservaBackup" />
+        </set>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idTarjeta" />
+            </key>
+            <one-to-many class="POJO.Reserva" />
+        </set>
+    </class>
+</hibernate-mapping>
