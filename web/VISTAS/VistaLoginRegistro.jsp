@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
@@ -211,9 +211,9 @@
                                             <option selected>Tipo documento</option>
                                             <option value="nif">NIF</option>
                                             <option value="nie">NIE</option>
-                                            
+
                                         </select>
-                                        
+
                                     </div>
                                 </div>
 
@@ -237,7 +237,7 @@
                                     <input type="number" id="materialRegisterFormPhone" name="telefono" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
                                     <label for="materialRegisterFormPhone">Número de teléfono</label>
                                     <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-                                        
+
                                     </small>
                                 </div>
 
@@ -278,5 +278,17 @@
 
         <!-- final div img-->  
     </div>
+    <script>
+
+
+
+        $('.md-form').on('focusout', function (e) {
+
+        });
+        $('.md-form').focusin(function () {
+            $('#a_c').show();
+        });
+
+    </script>
 </body>
 </html>
