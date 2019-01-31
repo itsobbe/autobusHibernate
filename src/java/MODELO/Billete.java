@@ -27,6 +27,9 @@ public class Billete {
         this.cliente = cliente;
     }
 
+    public Billete() {
+    }
+
     public Viaje getViaje() {
         return viaje;
     }

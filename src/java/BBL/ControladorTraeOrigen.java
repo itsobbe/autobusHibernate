@@ -7,6 +7,7 @@ package BBL;
 
 import DAO.NewHibernateUtil;
 import DAO.Operaciones;
+import MODELO.Billete;
 import MODELO.TrayectoHorario;
 import POJO.Estacion;
 import POJO.Parametros;
@@ -60,6 +61,10 @@ public class ControladorTraeOrigen extends HttpServlet {
                 //creamos obj trayectoHorario y guardamos en sesion y metermos ahí los datos temporales que nos interesen
                 TrayectoHorario trayectoHorario=new TrayectoHorario();
                 session.setAttribute("trayectoHorario", trayectoHorario);
+                
+                //creamos obj billete
+                Billete billete=new Billete();
+                request.getSession().setAttribute("billete", billete);
                 
                 //redirigimos
                 response.sendRedirect("VISTAS/inicio.jsp");

@@ -5,12 +5,14 @@
  */
 package BBL;
 
+import MODELO.Billete;
 import MODELO.TrayectoHorario;
 import POJO.Ocupacion;
 import POJO.Viajero;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +60,15 @@ public class ControladorGuardarDatosViajeros extends HttpServlet {
                 }
                 int a=1;
                 
+                //recogemos varibale sesion Billete donde ya guardar datos importante
+                Billete billete=(Billete)request.getSession().getAttribute("billete");
+                billete.setViajero(viajeros);
+                //request.getSession().setAttribute("billete", billete);
+
+                
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaResumenCompra.jsp");
+                requestDispatcher.forward(request, response);
+//                  response.sendRedirect("VISTAS/VistaResumenCompra.jsp");
                 
             } catch (Exception e) {
             }

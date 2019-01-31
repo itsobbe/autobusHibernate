@@ -21,6 +21,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import MODELO.Salida;
 import MODELO.TrayectoHorario;
+import POJO.Cliente;
 import POJO.Parametros;
 
 /**
@@ -283,5 +284,36 @@ public class Operaciones {
         }
     }
 
+    public Cliente login(SessionFactory SessionBuilder,String email,String contrasena) throws ApplicationException{
+        Session sesion=SessionBuilder.openSession();
+        Transaction tx=null;
+        Cliente cliente=null;
+        try {
+            tx=sesion.beginTransaction();
+                
+            String orden="from Cliente where email=:vemail AND contrasena=:vcontrasena";
+            Query q=sesion.createQuery(orden);
+            q.setParameter("vemail", email);
+            q.setParameter("vcontrasena", contrasena);
+            cliente=(Cliente)q.uniqueResult();
+            tx.commit();
+            if (cliente != null) {
+                return cliente;
+            }else{
+                throw new ApplicationException("Error", 2, "No se ha encontrado cliente");
+            }
+        } catch (HibernateException HE) {
+            HE.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new ApplicationException("Error", 0, HE.getMessage());
+        } finally {
+            sesion.close();
+        }
+        
+    }
+    
+    
 //final clase operaciones
 }

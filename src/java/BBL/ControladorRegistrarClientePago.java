@@ -5,29 +5,23 @@
  */
 package BBL;
 
-import DAO.NewHibernateUtil;
-import DAO.Operaciones;
 import MODELO.Billete;
-import POJO.Ocupacion;
-import POJO.Viaje;
+import MODELO.Hash;
+import POJO.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.hibernate.SessionFactory;
 
 /**
  *
  * @author owa_7
  */
-public class ControladorPruebas extends HttpServlet {
-    
-private SessionFactory SessionBuilder;
+public class ControladorRegistrarClientePago extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,51 +31,47 @@ private SessionFactory SessionBuilder;
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-@Override
-    public void init() {
-        SessionBuilder = NewHibernateUtil.getSessionFactory();
-    }
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            
+            //no lo vamos a registrar hasta que no se detallen todos los datos 
+            //hacemos un obj cliente y lo metemos en billete sesion
             try {
-                //new Operaciones().pruebas(SessionBuilder);
-                List<Ocupacion> asiento=new Operaciones().devuelveOcupacion(SessionBuilder, 1);
                 
-                
-                request.getSession().setAttribute("arrayAsiento", asiento);
-                
-                //guardamos el viaje elegido que nos vieje por método get desde botón reservar
-                int idViaje=Integer.parseInt(request.getParameter("id"));
-                
-                //aqui deberia llamar a datosViaje donde estan los viajes y buscar el que coincida con id y guardarlo en obj billete
+                String tipoIdentificador=request.getParameter("tipoIdentificador");
+                String identificacor=request.getParameter("identificador");
+                String nombre=request.getParameter("nombre");     
+                String apellidos=request.getParameter("apellidos");
+                String email=request.getParameter("email");
+                int telefono=Integer.parseInt(request.getParameter("telefono"));
+                String contrasena=Hash.sha1(request.getParameter("contrasena"));
+
+                //cambiar en bd a varchar
+                Cliente cliente=new Cliente(tipoIdentificador, identificacor, nombre, apellidos, email, telefono);
+                //guardamos en billete sesion obj cliente
                 Billete billete=(Billete)request.getSession().getAttribute("billete");
-                ArrayList<Viaje> viajes=(ArrayList<Viaje>)request.getSession().getAttribute("datosViaje");
+                billete.setCliente(cliente);
                 
-                for(Viaje item: viajes){
-                    if (item.getId().equals(idViaje)) {
-                        billete.setViaje(item);
-                    }
-                }
-                
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaRellenarDatosPersonales.jsp");
-                request.setAttribute("arrayAsiento",asiento);
-                requestDispatcher.forward(request, response);
+                out.print(cliente.getApellido());
+                //redirigimos a la vista formulario pago
+//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaPago.jsp");
+//                requestDispatcher.forward(request, response);
             } catch (Exception e) {
             }
+            
+            
             
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorPruebas</title>");            
+            out.println("<title>Servlet ControladorRegistrarClientePago</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorPruebas at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorRegistrarClientePago at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

@@ -66,17 +66,18 @@ public class ControladorBuscarViaje extends HttpServlet {
 //                List<Viaje> datosViaje = new Operaciones().devuelveDatosBusquedaViajeV2(SessionBuilder, trayecto);
                 List<Viaje> datosViaje = new Operaciones().devuelveDatosBusquedaViaje(SessionBuilder,origen, destino, fecha, totalPasajeros);
 
-//                for (Viaje item : datosViaje) {
-//                    trayecto.setOrigen(item.getHorario().getRuta().getEstacionByEstacionOrigen().getNombre());
-//                    trayecto.setDestino(item.getHorario().getRuta().getEstacionByEstacionDestino().getNombre());
+                for (Viaje item : datosViaje) {
+                    trayecto.setOrigen(item.getHorario().getRuta().getEstacionByEstacionOrigen().getNombre());
+                    trayecto.setDestino(item.getHorario().getRuta().getEstacionByEstacionDestino().getNombre());
 //                    LocalDate fechaFinal = item.getFechaViaje().toInstant()
 //                            .atZone(ZoneId.systemDefault())
 //                            .toLocalDate();
-//                    trayecto.setFechaSalida(fechaFinal);
-//                    trayecto.setNumViajeros(totalPasajeros);
-//                    trayecto.setSalida(new Salida(item.getHorario().getHoraSalida().toString(), item.getHorario().getRuta().getDuracion().toString(), item.getHorario().getRuta().getKilometros().toString(), item.getHorario().getRuta().getPrecio(), item.getPlazasLibres()));
-//                }
-                request.getSession().setAttribute("trayectoHorario", trayecto);
+                    LocalDate fechaFinal=new java.sql.Date(item.getFechaViaje().getTime()).toLocalDate();
+                    trayecto.setFechaSalida(fechaFinal);
+                    //trayecto.setNumViajeros(totalPasajeros);
+                    trayecto.setSalida(new Salida(item.getHorario().getHoraSalida().toString(), item.getHorario().getRuta().getDuracion().toString(), item.getHorario().getRuta().getKilometros().toString(), item.getHorario().getRuta().getPrecio(), item.getPlazasLibres()));
+                }
+//                request.getSession().setAttribute("trayectoHorario", trayecto);
 
                 //guardamos en sesion los viajes
                 request.getSession().setAttribute("datosViaje", datosViaje);

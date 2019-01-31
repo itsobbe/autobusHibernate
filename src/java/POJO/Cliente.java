@@ -34,6 +34,16 @@ public class Cliente  implements java.io.Serializable {
        this.contrasena = contrasena;
        this.tarjetas = tarjetas;
     }
+    public Cliente(String tipoIdentificador, String identifcador, String nombre, String apellido, String email, Integer telefono) {
+       this.tipoIdentificador = tipoIdentificador;
+       this.identifcador = identifcador;
+       this.nombre = nombre;
+       this.apellido = apellido;
+       this.email = email;
+       this.telefono = telefono;
+       this.contrasena = contrasena;
+       this.tarjetas = tarjetas;
+    }
    
     public Integer getId() {
         return this.id;

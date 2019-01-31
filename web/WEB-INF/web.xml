@@ -20,6 +20,14 @@
         <servlet-name>ControladorGuardarDatosViajeros</servlet-name>
         <servlet-class>BBL.ControladorGuardarDatosViajeros</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorLoginPago</servlet-name>
+        <servlet-class>BBL.ControladorLoginPago</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorRegistrarClientePago</servlet-name>
+        <servlet-class>BBL.ControladorRegistrarClientePago</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>ControladorGuardarDatosViajeros</servlet-name>
         <url-pattern>/ControladorGuardarDatosViajeros</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorLoginPago</servlet-name>
+        <url-pattern>/ControladorLoginPago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorRegistrarClientePago</servlet-name>
+        <url-pattern>/ControladorRegistrarClientePago</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
