@@ -26,7 +26,7 @@
         <property name="telefono" type="java.lang.Integer">
             <column name="telefono" />
         </property>
-        <property name="contrasena" type="binary">
+        <property name="contrasena" type="string">
             <column name="contrasena" />
         </property>
         <set name="tarjetas" table="tarjeta" inverse="true" lazy="true" fetch="select">

@@ -3,6 +3,10 @@
     Created on : 31-ene-2019, 16:26:09
     Author     : owa_7
 --%>
+<%@page import="java.util.Set"%>
+<%@page import="POJO.Tarjeta"%>
+<%@page import="MODELO.Billete"%>
+<%@page import="POJO.Cliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +20,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/css/mdb.min.css" rel="stylesheet">
-        <link href="../CSS/compiled-4.6.1.min.css" rel="stylesheet">
+        <link href="../CSS/compiledd-4.6.1.min.css" rel="stylesheet">
         <link href="../CSS/css.css" rel="stylesheet">
 
     </head>
@@ -55,64 +59,76 @@
                 </ul>
             </div>
         </nav>
+        <!-- Horizontal Steppers -->
+        <div class="row mx-auto w-100">
+            <div class="col-md-12">
+
+                <!-- Stepers Wrapper -->
+                <ul class="stepper stepper-horizontal bg-white">
+
+                    <!-- First Step -->
+                    <li class="completed">
+                        <a href="#!">
+                            <span class="circle ">1</span>
+                            <span class="label">Elige</span>
+                        </a>
+                    </li>
+
+                    <!-- Second Step -->
+                    <li class="">
+                        <a href="#!">
+                            <span class="circle">2</span>
+                            <span class="label">Reserva</span>
+                        </a>
+                    </li>
+
+                    <!-- Third Step -->
+                    <li class="">
+                        <a href="#!">
+                            <span class="circle">3</span>
+                            <span class="label">Datos personales</span>
+                        </a>
+                    </li>
+                    <!-- Forth Step -->
+                    <li class="">
+                        <a href="#!">
+                            <span class="circle">3</span>
+                            <span class="label">Resumen</span>
+                        </a>
+                    </li>
+
+                    <!-- Fifth Step -->
+                    <li class="">
+                        <a href="#!">
+                            <span class="circle"><i class="fas fa-exclamation"></i></span>
+                            <span class="label">Pago</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- /.Stepers Wrapper -->
+
+            </div>
+        </div>
+        <!-- /.Horizontal Steppers -->
         <!--/.Navbar -->
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <!-- Horizontal Steppers -->
-                    <div class="row mx-auto w-50">
-                        <div class="col-md-12">
+            <!-- Recogemos los datos de sesion de cliente -->
+            <%
+                Cliente cliente = null;
+                if (request.getSession().getAttribute("billete") != null) {
+                    Billete billete = ((Billete) request.getSession().getAttribute("billete"));
+                    if (billete.getCliente() != null) {
+                        cliente = billete.getCliente();
 
-                            <!-- Stepers Wrapper -->
-                            <ul class="stepper stepper-horizontal bg-white">
+                    }
+                }
 
-                                <!-- First Step -->
-                                <li class="completed">
-                                    <a href="#!">
-                                        <span class="circle ">1</span>
-                                        <span class="label">Elige</span>
-                                    </a>
-                                </li>
+            %>
 
-                                <!-- Second Step -->
-                                <li class="">
-                                    <a href="#!">
-                                        <span class="circle">2</span>
-                                        <span class="label">Reserva</span>
-                                    </a>
-                                </li>
 
-                                <!-- Third Step -->
-                                <li class="">
-                                    <a href="#!">
-                                        <span class="circle">3</span>
-                                        <span class="label">Datos personales</span>
-                                    </a>
-                                </li>
-                                <!-- Forth Step -->
-                                <li class="">
-                                    <a href="#!">
-                                        <span class="circle">3</span>
-                                        <span class="label">Resumen</span>
-                                    </a>
-                                </li>
 
-                                <!-- Fifth Step -->
-                                <li class="">
-                                    <a href="#!">
-                                        <span class="circle"><i class="fas fa-exclamation"></i></span>
-                                        <span class="label">Pago</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                            <!-- /.Stepers Wrapper -->
-
-                        </div>
-                    </div>
-                    <!-- /.Horizontal Steppers -->
-                </div>
-            </div>
+            <!-- INICIO FILA FORMULARO PAGO -->
             <div class="row">
                 <div class="col d-flex justify-content-center">
                     <!-- Material form register -->
@@ -126,7 +142,7 @@
                         <div class="card-body px-lg-5 pt-0">
 
                             <!-- Form -->
-                            <form action="../Controlador" class="text-center p-5" style="color: #757575;">
+                            <form action="../ControladorPago" class="text-center p-5" style="color: #757575;">
 
                                 <!-- Default form contact -->
 
@@ -137,53 +153,75 @@
                                         <!-- num tarj -->
                                         <label>
 
-                                            <input type="number" id="defaultContactFormName" class="form-control mb-4" placeholder="Nºtarjeta">
+                                            <input type="number" name="tarjetaNueva" id="defaultContactFormName" class="form-control mb-4" placeholder="Nºtarjeta">
                                         </label>
                                     </div>
                                     <div class="col">
                                         <!-- tipo -->
-                                        <select class="browser-default custom-select mb-4">
+                                        <select name="tarjetaNuevaTipo" class="browser-default custom-select mb-4">
                                             <option value="" disabled>Elige</option>
                                             <option value="1" selected>Mastercard</option>
                                         </select>
                                     </div>
                                 </div>
+                                <%                                    //vemos si este cliente tiene tarjetas en bd y las cargamos en select    
+                                    if (cliente.getTarjetas().size() > 0) {
+
+
+                                %>
                                 <div class="row">
-                                    
+
                                     <div class="col ">
                                         <!-- num tarj -->
                                         <label>
                                             O elija una tarjeta de un anterior pago
-                                            <select class="browser-default custom-select mb-4">
-                                            <option value="" disabled>Elige</option>
-                                            <option value="1" selected>Mastercard</option>
-                                        </select>
+
+                                            <select name="tarjetaVieja" class="browser-default custom-select mb-4">
+
+                                                <%                                                    //por cada tajeta que tenga el cliente mostramos 4 num de tarjta y como value le damos el id de atrjeta    
+                                                    for (Tarjeta item : (Set<Tarjeta>) cliente.getTarjetas()) {
+                                                %>
+                                                <option value="" disabled>Elige</option>
+                                                <option value="<%= item.getId()%>" selected>Mastercard</option>
+                                                <%
+                                                    //cerramos bucle tarjeta
+                                                    }
+                                                %>
+                                            </select>
                                         </label>
                                     </div>
                                 </div>
+                                <%
+                                        //cerramos el if de si hay tarjetas
+                                    }
+
+                                %>
                                 <div class="row">
                                     <div class="col">
                                         <label>
-                                            
-                                            <input class="form-control mb-4" type="month" value="2011-08" id="example-month-input">
+                                            Caducidad
+                                            <input name="caducidad" class="form-control mb-4" type="month" min="2019-03" value="2019-03" id="example-month-input">
                                         </label>
 
                                     </div>
                                     <div class="col">
-                                        <input type="number" id="defaultContactFormName" class="form-control mb-4" placeholder="CVV">
+                                        <label>
+                                            Código CVV
+                                            <input type="number" name="cvv" id="defaultContactFormName" class="form-control mb-4" placeholder="CVV">
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <label>
                                             Nombre
-                                            <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
+                                            <input type="text" name="nombre" id="defaultContactFormName" class="form-control mb-4" value="<%= cliente.getNombre()%>">
                                         </label>
                                     </div>
                                     <div class="col">
                                         <label>
                                             Apellidos
-                                            <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="">
+                                            <input type="text" name="apellidos" id="defaultContactFormName" class="form-control mb-4" value="<%= cliente.getApellido()%>">
                                         </label>
                                     </div>
                                 </div>

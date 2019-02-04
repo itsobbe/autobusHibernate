@@ -18,13 +18,13 @@ public class Cliente  implements java.io.Serializable {
      private String apellido;
      private String email;
      private Integer telefono;
-     private byte[] contrasena;
+     private String contrasena;
      private Set tarjetas = new HashSet(0);
 
     public Cliente() {
     }
 
-    public Cliente(String tipoIdentificador, String identifcador, String nombre, String apellido, String email, Integer telefono, byte[] contrasena, Set tarjetas) {
+    public Cliente(String tipoIdentificador, String identifcador, String nombre, String apellido, String email, Integer telefono, String contrasena, Set tarjetas) {
        this.tipoIdentificador = tipoIdentificador;
        this.identifcador = identifcador;
        this.nombre = nombre;
@@ -41,8 +41,15 @@ public class Cliente  implements java.io.Serializable {
        this.apellido = apellido;
        this.email = email;
        this.telefono = telefono;
+    }
+    public Cliente(String tipoIdentificador, String identifcador, String nombre, String apellido, String email, Integer telefono,String contrasena) {
+       this.tipoIdentificador = tipoIdentificador;
+       this.identifcador = identifcador;
+       this.nombre = nombre;
+       this.apellido = apellido;
+       this.email = email;
+       this.telefono = telefono;
        this.contrasena = contrasena;
-       this.tarjetas = tarjetas;
     }
    
     public Integer getId() {
@@ -94,11 +101,11 @@ public class Cliente  implements java.io.Serializable {
     public void setTelefono(Integer telefono) {
         this.telefono = telefono;
     }
-    public byte[] getContrasena() {
+    public String getContrasena() {
         return this.contrasena;
     }
     
-    public void setContrasena(byte[] contrasena) {
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
     public Set getTarjetas() {
@@ -107,6 +114,9 @@ public class Cliente  implements java.io.Serializable {
     
     public void setTarjetas(Set tarjetas) {
         this.tarjetas = tarjetas;
+    }
+    public void setTarjeta(Tarjeta tarjeta) {
+        this.tarjetas.add(tarjetas);
     }
 
 

@@ -28,6 +28,10 @@
         <servlet-name>ControladorRegistrarClientePago</servlet-name>
         <servlet-class>BBL.ControladorRegistrarClientePago</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorPago</servlet-name>
+        <servlet-class>BBL.ControladorPago</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>ControladorRegistrarClientePago</servlet-name>
         <url-pattern>/ControladorRegistrarClientePago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorPago</servlet-name>
+        <url-pattern>/ControladorPago</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -66,7 +66,7 @@
             </nav>
             <!--/.Navbar -->
             <!-- Horizontal Steppers -->
-            <div class="row mx-auto w-50">
+            <div class="row mx-auto w-100">
                 <div class="col-md-12">
 
                     <!-- Stepers Wrapper -->
@@ -136,16 +136,40 @@
 
 
             <!-- formulario pasajeros -->
-            <form action="">
+            <form action="" class="w-50 mx-auto">
                 <!-- Aquí meter los datos conjuntos -->
-                <h5 class="card-header bg-light">BUSAWA</h5>
-                <div class="card-body bg-white">
-                    <h5 class="card-title">Origen: <%= trayectoHorario.getOrigen()%></h5>
-                    <h5 class="card-title">Destino: <%= trayectoHorario.getDestino()%></h5>
-                    <p class="card-text">Fecha Salida: <%= trayectoHorario.getFechaSalida().format(DateTimeFormatter.ofPattern("dd MMM uuu"))%></p>
-                    <p class="card-text">Precio total: <%= dc.format(trayectoHorario.getSalida().get(0).getPrecio() * totalPasajeros)%>€</p>
-                    <p class="card-text">Hora Salida:<%= viaje.getHorario().getHoraSalida()%></p>
+                <h5 class="card-header bg-info text-white">BUSAWA</h5>
+                
+                
+
+                <div class="bg-white">
+                    <div class="row">
+
+                    <!-- Grid column -->
+                    <div class="col d-inline-flex justify-content-around">
+
+                        <h4 class="h4 mb-4"><i class="fas fa-bus-alt text-primary"><%= trayectoHorario.getOrigen() %></i></h4>
+
+                        <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora salida:<%= viaje.getHorario().getHoraSalida() %></i></p>
+                        <p class="font-weight-normal align-self-start"><i class="fas fa-arrow-right"></i> <i
+                                class="fas fa-stopwatch"> <%= trayectoHorario.getSalida().get(0).getDuracion()%> MIN</i> <i class="fas fa-arrow-right"></i></p>
+                        <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora llegada:</i></p>
+                        <h4 class="h4 mb-4 text-primary"><%= trayectoHorario.getDestino() %><i class="fas fa-bus-alt"></i></h4>
+
+                    </div>
+                    <!-- Grid column -->
                 </div>
+                <!-- Grid row -->
+
+                <div class="row d-flex justify-content-center">
+
+
+                    <a href="#" class="btn btn-primary"><%= dc.format(trayectoHorario.getSalida().get(0).getPrecio() * totalPasajeros) %> <i class="fas fa-euro-sign"></i></a>
+                    <!-- Excerpt -->
+                    
+                </div>
+                </div>
+
                 <!--Accordion wrapper-->
                 <div class="accordion md-accordion" id="accordionEx1" role="tablist" aria-multiselectable="true">
 
@@ -160,9 +184,9 @@
                     <div class="card">
 
                         <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingTwo1">
+                        <div class="card-header" role="tab" id="headingTwo<%=i%>">
                             <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo<%=i%>"
-                               aria-expanded="false" aria-controls="collapseTwo1">
+                               aria-expanded="false" aria-controls="collapseTwo<%=i%>">
                                 <h5 class="mb-0">
                                     Pasajero <%=i + 1%> <i class="fas fa-angle-down rotate-icon"></i>
                                 </h5>
@@ -170,7 +194,7 @@
                         </div>
 
                         <!-- Card body -->
-                        <div id="collapseTwo<%=i%>" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
+                        <div id="collapseTwo<%=i%>" class="collapse" role="tabpanel" aria-labelledby="headingTwo<%=i%>" data-parent="#accordionEx1">
                             <div class="card-body">
                                 <span>NIF/NIE</span>
                                 <input type="text" id="totalPasajero" name="identificacion<%=i%>" class="form-control mt-1 mb-1" value="<%= viajeros.get(i).getIdentificador()%>">
@@ -193,8 +217,7 @@
                         };
                     %>
                     <div class="card-footer text-muted">
-                        <button class="btn btn-secondary" href type="submit">Siguiente</button>
-                        <a href="VISTAS/VistaLoginRegistro.jsp" class="btn btn-secondary" role="button" aria-pressed="true">Siguiente</a>
+                        <a href="VISTAS/VistaLoginRegistro.jsp" class="btn btn-primary" role="button" aria-pressed="true">Siguiente</a>
                     </div>
                 </div>
                 <!-- Accordion wrapper -->
@@ -204,7 +227,7 @@
                 <p class="text-white">IES Leonardo Da Vinci - 2019</p>
             </footer>
         </div>
-                    <script type="text/javascript" src="JS/compiled.0.min.js"></script>
+        
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
@@ -213,5 +236,6 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
+        <script type="text/javascript" src="JS/compiled.0.min.js"></script>
     </body>
 </html>

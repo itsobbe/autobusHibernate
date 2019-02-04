@@ -56,11 +56,10 @@
             </div>
         </nav>
         <!--/.Navbar -->
-        <div class="container">
-            <div class="row">
+        <div class="row">
                 <div class="col">
                     <!-- Horizontal Steppers -->
-                    <div class="row mx-auto w-50">
+                    <div class="row mx-auto w-0">
                         <div class="col-md-12">
 
                             <!-- Stepers Wrapper -->
@@ -113,6 +112,8 @@
                     <!-- /.Horizontal Steppers -->
                 </div>
             </div>
+        <div class="container">
+            
             <div class="row">
                 <div class="col">
                     <!-- Material form login -->
@@ -185,14 +186,14 @@
                                     <div class="col">
                                         <!-- First name -->
                                         <div class="md-form">
-                                            <input type="text" id="nombre" name="nombre" class="form-control">
                                             <label for="nombre">Nombre</label>
+                                            <input type="text" id="nombre" name="nombre" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <!-- Last name -->
                                         <div class="md-form">
-                                            <input type="email" id="apellidos" name="apellidos" class="form-control">
+                                            <input type="text" id="apellidos" name="apellidos" class="form-control">
                                             <label for="apellidos">Apellidos</label>
                                         </div>
                                     </div>
@@ -248,7 +249,7 @@
                                 </div>
 
                                 <!-- Sign up button -->
-                                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+                                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Registrar</button>
 
 
                                 <hr>

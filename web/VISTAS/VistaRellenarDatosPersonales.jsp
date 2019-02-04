@@ -26,7 +26,7 @@
     </head>
     <body class="h-100">
 
-        <div class="bg img-fluid h-100 d-flex flex-column">
+        <div class="bg img-fluid h-100 d-flex flex-column" style="overflow: auto">
             <!--Navbar -->
             <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
                 <a class="navbar-brand " href="#">Navbar</a>
@@ -60,7 +60,7 @@
             </nav>
             <!--/.Navbar -->
             <!-- Horizontal Steppers -->
-            <div class="row mx-auto w-50">
+            <div class="row mx-auto w-100">
                 <div class="col-md-12">
 
                     <!-- Stepers Wrapper -->
@@ -121,7 +121,7 @@
             <!-- formulario pasajeros -->
             <form action="ControladorGuardarDatosViajeros">
                 <!--Accordion wrapper-->
-                <div class="accordion md-accordion" id="accordionEx1" role="tablist" aria-multiselectable="true">
+                <div class="accordion md-accordion w-50 mx-auto" id="accordionEx1" role="tablist" aria-multiselectable="true">
 
                     <%  for (int i = 0; i < totalPasajeros; i++) {
                     %>
@@ -129,10 +129,10 @@
                     <div class="card">
 
                         <!-- Card header -->
-                        <div class="card-header" role="tab" id="headingTwo1">
+                        <div class="card-header bg-info" role="tab" id="headingTwo1">
                             <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo<%=i%>"
                                aria-expanded="false" aria-controls="collapseTwo1">
-                                <h5 class="mb-0">
+                                <h5 class="mb-0  text-white">
                                     Pasajero <%=i + 1%> <i class="fas fa-angle-down rotate-icon"></i>
                                 </h5>
                             </a>
@@ -180,7 +180,7 @@
                         };
                     %>
                     <div class="card-footer text-muted">
-                        <button class="btn btn-secondary" type="submit">Siguiente</button>
+                        <button class="btn btn-primary" type="submit">Siguiente</button>
                     </div>
                 </div>
                 <!-- Accordion wrapper -->

@@ -49,15 +49,16 @@ public class ControladorRegistrarClientePago extends HttpServlet {
                 String contrasena=Hash.sha1(request.getParameter("contrasena"));
 
                 //cambiar en bd a varchar
-                Cliente cliente=new Cliente(tipoIdentificador, identificacor, nombre, apellidos, email, telefono);
+                Cliente cliente=new Cliente(tipoIdentificador, identificacor, nombre, apellidos, email, telefono,contrasena);
                 //guardamos en billete sesion obj cliente
                 Billete billete=(Billete)request.getSession().getAttribute("billete");
                 billete.setCliente(cliente);
                 
-                out.print(cliente.getApellido());
+                response.sendRedirect("VISTAS/VistaPago.jsp");
                 //redirigimos a la vista formulario pago
 //                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaPago.jsp");
 //                requestDispatcher.forward(request, response);
+                
             } catch (Exception e) {
             }
             

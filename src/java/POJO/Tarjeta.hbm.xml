@@ -14,8 +14,8 @@
         <property name="tipo" type="string">
             <column name="tipo" length="11" />
         </property>
-        <property name="numero" type="java.lang.Integer">
-            <column name="numero" unique="true" />
+        <property name="numero" type="binary" >
+            <column name="numero" unique="true" read="AES_DECRYPT(numero,'oualid')" write="AES_ENCRYPT(?,'oualid')"/>
         </property>
         <property name="caducidad" type="string">
             <column name="caducidad" length="50" />

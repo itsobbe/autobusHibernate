@@ -4,13 +4,26 @@
     Author     : owa_7
 --%>
 
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.ZoneOffset"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.time.Instant"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.time.LocalTime"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="POJO.Viaje"%>
 <%@page import="POJO.Ruta"%>
 <%@page import="java.util.List"%>
+<%@page import="java.sql.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,7 +37,10 @@
         <!-- Bootstrap CSS -->
         <title>Busawa</title>
     </head>
+
     <body class="h-100">
+
+
         <%
             //List datosViaje=(List)request.getAttribute("datosViaje");
             List<Viaje> datosViaje = (List) session.getAttribute("datosViaje");
@@ -54,8 +70,8 @@
                                 <i class="fab fa-instagram"></i> Instagram</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-user"></i> Profile </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
                                 <a class="dropdown-item" href="#">My account</a>
@@ -67,11 +83,11 @@
             </nav>
             <!--/.Navbar -->
             <!-- Horizontal Steppers -->
-            <div class="row mx-auto w-50">
+            <div class="row mx-auto w-100 z-depth-5">
                 <div class="col-md-12">
 
                     <!-- Stepers Wrapper -->
-                    <ul class="stepper stepper-horizontal bg-white">
+                    <ul class="stepper stepper-horizontal shadow bg-white">
 
                         <!-- First Step -->
                         <li class="completed">
@@ -96,6 +112,20 @@
                                 <span class="label">Datos personales</span>
                             </a>
                         </li>
+                        <!-- Third Step -->
+                        <li class="">
+                            <a href="#!">
+                                <span class="circle">3</span>
+                                <span class="label">Datos personales</span>
+                            </a>
+                        </li>
+                        <!-- Third Step -->
+                        <li class="">
+                            <a href="#!">
+                                <span class="circle">3</span>
+                                <span class="label">Datos personales</span>
+                            </a>
+                        </li>
 
                         <!-- Forth Step -->
                         <li class="">
@@ -113,61 +143,55 @@
             <!-- /.Horizontal Steppers -->
             <div class="row w-100">
                 <div class="col">
-
                     <!-- News jumbotron -->
                     <%
                         try {
-                            DecimalFormat dc=new DecimalFormat("###.##");
+                            DecimalFormat dc = new DecimalFormat("###.##");
+                            DecimalFormat a = new DecimalFormat("##");
                             for (int i = 0; i < datosViaje.size(); i++) {
-
-                                //Object[] a = (Object[]) datosViaje.get(i);
-                                //ruta = (Ruta) a[0];
-                                //viaje = (Viaje) a[1];
-
+                                Instant instant = Instant.ofEpochMilli(datosViaje.get(i).getHorario().getHoraSalida().getTime());
+                                LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.systemDefault());      
                     %>
                     <div>
                         <div class="jumbotron text-center hoverable p-4 w-50 mx-auto">
+
+                            <div class="row d-flex justify-content-center">
+                                <!-- Excerpt -->
+                                <a href="#!" class="green-text">
+                                    <h6 class="h6 pb-1 text-primary">BUSAWA</h6>
+                                    <p class="font-weight-normal"><i class="far fa-calendar-alt"></i><%= LocalDate.parse(datosViaje.get(i).getFechaViaje().toString()).format(DateTimeFormatter.ofPattern("d-MM-uuuu")) %></p>
+                                </a>
+                            </div>
+
                             <!-- Grid row -->
                             <div class="row">
 
                                 <!-- Grid column -->
-                                <div class="col-md-4 offset-md-1 mx-3 my-3">
+                                <div class="col d-inline-flex justify-content-around">
 
-                                    <!-- Featured image -->
-                                    <div class="view overlay">
-                                        <img src="https://mdbootstrap.com/img/Photos/Others/laptop-sm.jpg" class="img-fluid" alt="Sample image for first version of blog listing">
-                                        <a>
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>
-                                    </div>
+                                    <h4 class="h4 mb-4"><i class="fas fa-bus-alt text-primary"><%=datosViaje.get(i).getHorario().getRuta().getEstacionByEstacionOrigen().getNombre()%></i></h4>
 
-                                </div>
-                                <!-- Grid column -->
-
-                                <!-- Grid column -->
-                                <div class="col-md-7 text-md-left ml-3 mt-3">
-
-                                    <!-- Excerpt -->
-                                    <a href="#!" class="green-text">
-                                        <h6 class="h6 pb-1 text-primary"><i class="fas fa-desktop pr-1"></i> Work</h6>
-                                    </a>
-
-                                    <h4 class="h4 mb-4"><%=datosViaje.get(i).getHorario().getRuta().getEstacionByEstacionOrigen().getNombre() + "  -   " + datosViaje.get(i).getHorario().getRuta().getEstacionByEstacionDestino().getNombre() %></h4>
-
-                                    <p class="font-weight-normal">Duración: <%= datosViaje.get(i).getHorario().getRuta().getDuracion()%></p>
-                                    <p class="font-weight-normal">Hora salida: <%= datosViaje.get(i).getHorario().getHoraSalida()%></p>
-                                    <p class="font-weight-normal">Fecha: <%= datosViaje.get(i).getFechaViaje()%></p>
-                                    <p class="font-weight-normal">Precio: <%= dc.format(datosViaje.get(i).getHorario().getRuta().getPrecio()) %></p>
-
-                                    <a href="ControladorPruebas?id=<%=datosViaje.get(i).getId()%>" class="btn btn-outline-primary">Reservar</a>
+                                    <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora salida:<%= datosViaje.get(i).getHorario().getHoraSalida()%></i></p>
+                                    <p class="font-weight-normal align-self-start"><i class="fas fa-arrow-right"></i> <i
+                                            class="fas fa-stopwatch"> <%= a.format(datosViaje.get(i).getHorario().getRuta().getDuracion()) %> MIN</i> <i class="fas fa-arrow-right"></i></p>
+                                    <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora llegada:<%= ldt.plusMinutes(datosViaje.get(i).getHorario().getRuta().getDuracion().longValue()).format(DateTimeFormatter.ofPattern("HH:mm"))%></i></p>
+                                    <h4 class="h4 mb-4 text-primary"><%=datosViaje.get(i).getHorario().getRuta().getEstacionByEstacionDestino().getNombre()%><i class="fas fa-bus-alt"></i></h4>
 
                                 </div>
                                 <!-- Grid column -->
-
                             </div>
                             <!-- Grid row -->
 
-                        </div></div>
+                            <div class="row d-flex justify-content-center">
+
+
+                                <a href="#" class="btn btn-primary"><%= dc.format(datosViaje.get(i).getHorario().getRuta().getPrecio())%> <i class="fas fa-euro-sign"></i></a>
+                                <!-- Excerpt -->
+                                <a href="ControladorPruebas?id=<%=datosViaje.get(i).getId()%>" class="btn btn-outline-primary">Reservar</a>
+                            </div>
+
+                        </div>
+                    </div>
                     <!-- News jumbotron -->
                     <%}
 
@@ -192,4 +216,5 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
 
     </body>
+
 </html>

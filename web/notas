@@ -6,3 +6,12 @@
 Con lazy a false te trae todo, muy comodo :) y donde no hay lazy poner join y así al llamar a X clase tmb une las subs
 
 
+
+31-01
+Cambiando columnas en pojo y clases de 
+
+    cliente -> contraseña a String
+
+    Tarjeta -> a binary y poner aes encrypt en xml    read="AES_DECRYPT(numero,'oualid')" write="AES_ENCRYPT(?,'oualid')"
+
+
