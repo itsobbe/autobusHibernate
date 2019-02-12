@@ -7,6 +7,7 @@ package BBL;
 
 import DAO.NewHibernateUtil;
 import DAO.Operaciones;
+import MODELO.Billete;
 import MODELO.Hash;
 import POJO.Cliente;
 import java.io.IOException;
@@ -49,12 +50,13 @@ public class ControladorLoginPago extends HttpServlet {
                 String email=request.getParameter("emailLogin");
                 String contrasena=Hash.sha1(request.getParameter("contrasenaLogin"));
                 Cliente cliente = new Operaciones().login(SessionBuilder, email, contrasena);
-                
-                
-                out.print(cliente.getApellido());
+                //guardar en sesion billete
+                ((Billete)request.getSession().getAttribute("billete")).setCliente(cliente);
+                //out.print(cliente.getApellido());
                 //redirigimos a la vista formulario pago
 //                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaPago.jsp");
 //                requestDispatcher.forward(request, response);
+                   response.sendRedirect("VISTAS/VistaPago.jsp");
             } catch (Exception e) {
                 //si excepcion significa no existe cliente (cuando este bn todo codigo)
                 

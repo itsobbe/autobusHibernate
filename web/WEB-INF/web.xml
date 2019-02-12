@@ -32,6 +32,10 @@
         <servlet-name>ControladorPago</servlet-name>
         <servlet-class>BBL.ControladorPago</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorMontarObjReserva</servlet-name>
+        <servlet-class>BBL.ControladorMontarObjReserva</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ControladorPago</servlet-name>
         <url-pattern>/ControladorPago</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorMontarObjReserva</servlet-name>
+        <url-pattern>/ControladorMontarObjReserva</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

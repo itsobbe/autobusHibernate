@@ -15,7 +15,7 @@ public class Reserva  implements java.io.Serializable {
      private Integer id;
      private Tarjeta tarjeta;
      private Viaje viaje;
-     private Integer localizador;
+     private String localizador;
      private Double precio;
      private Date fechaPago;
      private Integer numViajeros;
@@ -24,7 +24,7 @@ public class Reserva  implements java.io.Serializable {
     public Reserva() {
     }
 
-    public Reserva(Tarjeta tarjeta, Viaje viaje, Integer localizador, Double precio, Date fechaPago, Integer numViajeros, Set ocupacions) {
+    public Reserva(Tarjeta tarjeta, Viaje viaje, String localizador, Double precio, Date fechaPago, Integer numViajeros, Set ocupacions) {
        this.tarjeta = tarjeta;
        this.viaje = viaje;
        this.localizador = localizador;
@@ -55,11 +55,11 @@ public class Reserva  implements java.io.Serializable {
     public void setViaje(Viaje viaje) {
         this.viaje = viaje;
     }
-    public Integer getLocalizador() {
+    public String getLocalizador() {
         return this.localizador;
     }
     
-    public void setLocalizador(Integer localizador) {
+    public void setLocalizador(String localizador) {
         this.localizador = localizador;
     }
     public Double getPrecio() {
@@ -90,7 +90,9 @@ public class Reserva  implements java.io.Serializable {
     public void setOcupacions(Set ocupacions) {
         this.ocupacions = ocupacions;
     }
-
+    public void setOcupacion(Ocupacion ocupacions) {
+        this.ocupacions.add(ocupacions);
+    }
 
 
 

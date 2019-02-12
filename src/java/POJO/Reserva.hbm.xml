@@ -8,13 +8,13 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="tarjeta" class="POJO.Tarjeta" fetch="select">
+        <many-to-one name="tarjeta" class="POJO.Tarjeta" fetch="select" cascade="save-update,evict,lock,merge,refresh,replicate">
             <column name="idTarjeta" />
         </many-to-one>
         <many-to-one name="viaje" class="POJO.Viaje" fetch="select">
             <column name="idViaje" />
         </many-to-one>
-        <property name="localizador" type="java.lang.Integer">
+        <property name="localizador" type="string">
             <column name="localizador" unique="true" />
         </property>
         <property name="precio" type="java.lang.Double">
@@ -26,7 +26,7 @@
         <property name="numViajeros" type="java.lang.Integer">
             <column name="numViajeros" />
         </property>
-        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select">
+        <set name="ocupacions" table="ocupacion" inverse="true" lazy="true" fetch="select" cascade="save-update,evict,lock,merge,refresh,replicate">
             <key>
                 <column name="idReserva" />
             </key>

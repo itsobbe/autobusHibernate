@@ -116,7 +116,7 @@ public class Cliente  implements java.io.Serializable {
         this.tarjetas = tarjetas;
     }
     public void setTarjeta(Tarjeta tarjeta) {
-        this.tarjetas.add(tarjetas);
+        this.tarjetas.add(tarjeta);
     }
 
 

@@ -26,8 +26,9 @@ import org.hibernate.SessionFactory;
  * @author owa_7
  */
 public class ControladorPruebas extends HttpServlet {
-    
-private SessionFactory SessionBuilder;
+
+    private SessionFactory SessionBuilder;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,48 +38,48 @@ private SessionFactory SessionBuilder;
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-@Override
+    @Override
     public void init() {
         SessionBuilder = NewHibernateUtil.getSessionFactory();
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-            
+
             try {
+
+                int id = Integer.parseInt(request.getParameter("id"));
                 //new Operaciones().pruebas(SessionBuilder);
-                List<Ocupacion> asiento=new Operaciones().devuelveOcupacion(SessionBuilder, 1);
-                
-                
+                List<Ocupacion> asiento = new Operaciones().devuelveOcupacion(SessionBuilder, id);
+
                 request.getSession().setAttribute("arrayAsiento", asiento);
-                
+
                 //guardamos el viaje elegido que nos vieje por método get desde botón reservar
-                int idViaje=Integer.parseInt(request.getParameter("id"));
-                
+                int idViaje = Integer.parseInt(request.getParameter("id"));
+
                 //aqui deberia llamar a datosViaje donde estan los viajes y buscar el que coincida con id y guardarlo en obj billete
-                Billete billete=(Billete)request.getSession().getAttribute("billete");
-                ArrayList<Viaje> viajes=(ArrayList<Viaje>)request.getSession().getAttribute("datosViaje");
-                
-                for(Viaje item: viajes){
+                Billete billete = (Billete) request.getSession().getAttribute("billete");
+                ArrayList<Viaje> viajes = (ArrayList<Viaje>) request.getSession().getAttribute("datosViaje");
+
+                for (Viaje item : viajes) {
                     if (item.getId().equals(idViaje)) {
                         billete.setViaje(item);
                     }
                 }
-                
+
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaRellenarDatosPersonales.jsp");
-                request.setAttribute("arrayAsiento",asiento);
+                request.setAttribute("arrayAsiento", asiento);
                 requestDispatcher.forward(request, response);
             } catch (Exception e) {
             }
-            
-            
+
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorPruebas</title>");            
+            out.println("<title>Servlet ControladorPruebas</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ControladorPruebas at " + request.getContextPath() + "</h1>");

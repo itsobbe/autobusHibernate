@@ -53,8 +53,10 @@ public class ControladorGuardarDatosViajeros extends HttpServlet {
                     String identificacion=request.getParameter("identificacion"+i);
                     String nombre=request.getParameter("nombre"+i);
                     String apellidos=request.getParameter("apellidos"+i);
+                    String tipoIdentificador=request.getParameter("tipo"+i);
                     int asiento=Integer.parseInt(request.getParameter("asiento"+i));
                     Viajero viajero=new Viajero(identificacion,nombre,apellidos);
+                    viajero.setTipoIdentificador(tipoIdentificador);
                     viajero.setOcupacion(new Ocupacion(asiento));
                     viajeros.add(viajero);
                 }

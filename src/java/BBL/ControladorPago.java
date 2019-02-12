@@ -11,6 +11,7 @@ import POJO.Tarjeta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,50 +46,54 @@ public class ControladorPago extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             try {
-
-                //recogemos todos los posibles datos del formulario
-                ////puede que unos u otros datos
-                String tipoNuevo = request.getParameter("tarjetaNuevaTipo");
-                String numeroNuevo = request.getParameter("tarjetaNueva");
-
-                //id de la tarjeta vieja pero comprobar si existe en form
-                if (request.getParameter("tarjetaVieja") != null) {
-                    int tarjetaNueva = Integer.parseInt(request.getParameter("tarjetaVieja"));
-                }
-
-                //fecha de mes y año y comprobar que la fecha caducidad es mayor que la fecha actual si no mostrar vista error o devolver a la misma
-                //LocalDate.now().getMonth().toString()
-                LocalDate caducidad = null;
-                String caducidadString = null;
-                if (request.getParameter("caducidad") != null) {
-                    caducidadString = request.getParameter("caducidad");
-                    caducidadString = caducidadString + "-01";
-                    caducidad = LocalDate.parse(caducidadString);
-                }
-
-                if (LocalDate.now().isAfter(caducidad)) {
-                    //si entra aqui significa que hoy es depues de la fecha dada por lo que está caducada
-                    //lanzar excepción o cargar la misma página anterior?
-                    String aa="";
-                }
+                //cliente de sesion meterle tarjeta y a tajeta meterle cliente?
+                //creamos obj tarjeta y metemos en billete sesion
+                Tarjeta tarjeta = new Tarjeta();
                 int cvv = Integer.parseInt(request.getParameter("cvv"));
+                //id de la tarjeta vieja pero comprobar si existe en form
+                if (request.getParameter("tarjetaVieja") != null && !request.getParameter("tarjetaVieja").equals("")) {
+                    int tarjetaNueva = Integer.parseInt(request.getParameter("tarjetaVieja"));
+                    tarjeta.setId(tarjetaNueva);
+
+                } else {
+                    //recogemos todos los posibles datos del formulario
+                    ////puede que unos u otros datos
+                    String tipoNuevo = request.getParameter("tarjetaNuevaTipo");
+                    String numeroNuevo = request.getParameter("tarjetaNueva");
+
+                    //fecha de mes y año y comprobar que la fecha caducidad es mayor que la fecha actual si no mostrar vista error o devolver a la misma
+                    //LocalDate.now().getMonth().toString()
+                    LocalDate caducidad = null;
+                    String caducidadString = null;
+                    if (request.getParameter("caducidad") != null) {
+                        caducidadString = request.getParameter("caducidad");
+                        caducidadString = caducidadString + "-01";
+                        caducidad = LocalDate.parse(caducidadString);
+                    }
+                    if (LocalDate.now().isAfter(caducidad)) {
+                        //si entra aqui significa que hoy es depues de la fecha dada por lo que está caducada
+                        //lanzar excepción o cargar la misma página anterior?
+                        String aa = "";
+                    }
+                    //para guardar numero tiene que ser encriptado con aes, pero son byte... cnvertir string en byte
+                    //guardar string caducidad con el día o solo mes/año
+                    tarjeta.setCaducidad(caducidadString);
+                    tarjeta.setNumero(numeroNuevo);
+                    tarjeta.setTipo(tipoNuevo);
+
+                }
                 //nombre y apellidos están ya en obj cliente pero puede que el titular sea otro del pago, si es nuevo nif y ect que?
                 String nombre = request.getParameter("nombre");
                 String apellidos = request.getParameter("apellidos");
 
-                //cliente de sesion meterle tarjeta y a tajeta meterle cliente?
-                //creamos obj tarjeta y metemos en billete sesion
-                Tarjeta tarjeta = new Tarjeta();
-                //para guardar numero tiene que ser encriptado con aes, pero son byte... cnvertir string en byte
-                //guardar string caducidad con el día o solo mes/año
-                tarjeta.setCaducidad(caducidadString);
-                tarjeta.setNumero(numeroNuevo);
-                tarjeta.setTipo(tipoNuevo);
                 //unimos cliente a tarjeta y viceversa o hacer esto en el contrlador que monta todo esto?
-                tarjeta.setCliente(((Billete)request.getSession().getAttribute("billete")).getCliente());
-                ((Billete)request.getSession().getAttribute("billete")).getCliente().setTarjeta(tarjeta);
-                
-                
+//                tarjeta.setCliente(((Billete) request.getSession().getAttribute("billete")).getCliente());
+//                ((Billete) request.getSession().getAttribute("billete")).getCliente().setTarjeta(tarjeta);
+                ((Billete) request.getSession().getAttribute("billete")).setTarjeta(tarjeta);
+                //redireccion a controladorMontarObj
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("ControladorMontarObjReserva");
+                requestDispatcher.forward(request, response);
+
             } catch (Exception e) {
             }
 

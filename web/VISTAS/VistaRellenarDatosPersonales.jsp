@@ -20,9 +20,10 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/css/mdb.min.css" rel="stylesheet">
-        <link href="CSsS/compiled-4.6.1.min.css" rel="stylesheet">
+        
         <link href="CSS/css.css" rel="stylesheet">
         <script type="text/javascript" src="JS/controlAsientos.js"></script>
+
     </head>
     <body class="h-100">
 
@@ -119,7 +120,7 @@
 
 
             <!-- formulario pasajeros -->
-            <form action="ControladorGuardarDatosViajeros">
+            <form onsubmit="return validarDNI(<%=totalPasajeros%>);" action="ControladorGuardarDatosViajeros" >
                 <!--Accordion wrapper-->
                 <div class="accordion md-accordion w-50 mx-auto" id="accordionEx1" role="tablist" aria-multiselectable="true">
 
@@ -142,7 +143,14 @@
                         <div id="collapseTwo<%=i%>" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
                             <div class="card-body">
                                 <span>NIF/NIE</span>
-                                <input type="text" id="totalPasajero" name="identificacion<%=i%>" class="form-control mt-1 mb-1">
+                                <input type="text" id="identificacion" name="identificacion<%=i%>" class="form-control mt-1 mb-1">
+                                <span>Tipo identificador</span>
+                                <select name="tipo<%=i%>" class="browser-default custom-select mb-4">
+                                    <option value="" disabled>Elige</option>
+                                    <option value="nif">NIF</option>
+                                    <option value="nie">NIE</option>
+                                </select>
+
                                 <span>Nombre</span>
                                 <input type="text" id="totalPasajero" name="nombre<%=i%>" class="form-control mt-1 mb-1">
                                 <span>Apellidos</span>
@@ -155,7 +163,11 @@
                                     <%
                                         try {
 
-                                            for (int j = 1; j < totPlazas + 1; j++) {%>
+                                            for (int j = 1; j < totPlazas + 1; j++) {
+                                                
+
+
+                                    %>
 
                                     <input type="checkbox" name="asiento<%=i%>" value="<%=j%>"
 
@@ -190,7 +202,7 @@
                 <p class="text-white">IES Leonardo Da Vinci - 2019</p>
             </footer>
         </div>
-        <script type="text/javascript" src="compiled.0.min.js"></script>
+            
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Bootstrap tooltips -->
@@ -200,12 +212,48 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
         <script type="text/javascript" src="JS/controlAsientos.js"></script>
-        <script>
-            //var a=document.querySelectorAll('input[id^="defaultUnchecked"]');
-            //a[0].addEventListener("click",function(){a.forEach(function(w){if(w != this ){w.checked=true}})})
 
 
-            //var curso=document.querySelectorAll('input[id^="curso"]')[j].value;
-        </script>
     </body>
+    <script>
+                
+            function validarDNI(cuantos) {
+                
+
+                for (i = 0; i < cuantos; i++) {
+                   
+                    var dni = document.getElementsByName("identificacion"+i)[0].value;
+                    var validador=true;
+                    var numero, let, letra;
+                    var expresion_regular_dni = /^[XYZ]?\d{5,8}[A-Z]$/;
+
+                    dni = dni.toUpperCase();
+                    var quien=i+1;
+                    if (expresion_regular_dni.test(dni) === true) {
+                        numero = dni.substr(0, dni.length - 1);
+                        numero = numero.replace('X', 0);
+                        numero = numero.replace('Y', 1);
+                        numero = numero.replace('Z', 2);
+                        let = dni.substr(dni.length - 1, 1);
+                        numero = numero % 23;
+                        letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
+                        letra = letra.substring(numero, numero + 1);
+                        if (letra !== let) {
+                            
+                            alert('Pasajero ' + quien + ', Identificador erroneo');
+                            validador= false;
+                        } else {
+                            validador = true;
+                        }
+                    } else {
+                        alert('Pasajero ' + quien + ', Identificador erroneo, formato no válido');
+                        validador = false;
+                    }
+                }
+                if(validador){
+                    return true;
+                }else{return false;}
+            }
+        </script>
+    
 </html>

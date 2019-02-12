@@ -142,7 +142,7 @@
                         <div class="card-body px-lg-5 pt-0">
 
                             <!-- Form -->
-                            <form action="../ControladorPago" class="text-center p-5" style="color: #757575;">
+                            <form onsubmit="return validar()" action="../ControladorPago" class="text-center p-5" style="color: #757575;">
 
                                 <!-- Default form contact -->
 
@@ -153,7 +153,7 @@
                                         <!-- num tarj -->
                                         <label>
 
-                                            <input type="number" name="tarjetaNueva" id="defaultContactFormName" class="form-control mb-4" placeholder="Nºtarjeta">
+                                            <input type="number" name="tarjetaNueva" id="numeroNuevo" class="form-control mb-4" placeholder="Nºtarjeta">
                                         </label>
                                     </div>
                                     <div class="col">
@@ -181,10 +181,10 @@
                                                 <%                                                    //por cada tajeta que tenga el cliente mostramos 4 num de tarjta y como value le damos el id de atrjeta    
                                                     for (Tarjeta item : (Set<Tarjeta>) cliente.getTarjetas()) {
                                                 %>
-                                                <option value="" disabled>Elige</option>
-                                                <option value="<%= item.getId()%>" selected>Mastercard</option>
+                                                <option value="" selected>Elige</option>
+                                                <option value="<%= item.getId()%>"><%= item.getNumeroString().substring(5)%></option>
                                                 <%
-                                                    //cerramos bucle tarjeta
+                                                        //cerramos bucle tarjeta
                                                     }
                                                 %>
                                             </select>
@@ -200,14 +200,14 @@
                                     <div class="col">
                                         <label>
                                             Caducidad
-                                            <input name="caducidad" class="form-control mb-4" type="month" min="2019-03" value="2019-03" id="example-month-input">
+                                            <input name="caducidad" id="caducidad" class="form-control mb-4" type="month" min="2019-03" value="2019-03" id="example-month-input">
                                         </label>
 
                                     </div>
                                     <div class="col">
                                         <label>
                                             Código CVV
-                                            <input type="number" name="cvv" id="defaultContactFormName" class="form-control mb-4" placeholder="CVV">
+                                            <input type="number" id="cvv" name="cvv" id="defaultContactFormName" class="form-control mb-4" placeholder="CVV">
                                         </label>
                                     </div>
                                 </div>
@@ -246,7 +246,41 @@
         <!-- final div img-->  
     </div>
 
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
+    <script type="text/javascript" src="../JS/creditcard.js"></script>
+    <script type="text/javascript" src="../JS/usoClaseCreito.js"></script>
+    
+    <script>
+        
+    var creditcard = new CreditCard();
+    
+  
+        function validar(){
+            
+            var numeroTarjeta=document.getElementById('numeroNuevo').value;
+            var fecha=document.getElementById('caducidad').value;
+            var fecha=fecha.split('-');
+            var cvv=document.getElementById('cvv').value;
+             //&& creditcard.isExpirationDateValid()
+             alert(fecha[0].toString());
+            if(creditcard.isValid(numeroTarjeta.toString()) && creditcard.isExpirationDateValid(fecha[1].toString(), fecha[0].toString()) && creditcard.isSecurityCodeValid(numeroTarjeta.toString(), cvv.toString())) {
+                
+                alert("sii");
 
+            }else{
+                alert("Error en tarjeta crédito");
+                return false;
+    }
+}
+        
+    </script>
 </body>
 </html>
 

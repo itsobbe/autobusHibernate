@@ -131,14 +131,14 @@
 
                                 <!-- Email -->
                                 <div class="md-form">
-                                    <input type="email" id="emailLogin" name="emailLogin" class="form-control">
-                                    <label for="email">E-mail</label>
+                                    <span>E-mail</span>
+                                    <input type="email" id="totalPasajero" name="emailLogin" class="form-control">
                                 </div>
 
                                 <!-- Password -->
                                 <div class="md-form">
+                                    <span>Contraseña</span>
                                     <input type="password" id="contrasenaLogin" name="contrasenaLogin" class="form-control">
-                                    <label for="contrasenaLogin">Contraseña</label>
                                 </div>
 
                                 <div class="d-flex justify-content-around">
@@ -156,7 +156,7 @@
                                 </div>
 
                                 <!-- Sign in button -->
-                                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+                                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Iniciar sesión</button>
 
 
                             </form>
@@ -186,15 +186,16 @@
                                     <div class="col">
                                         <!-- First name -->
                                         <div class="md-form">
-                                            <label for="nombre">Nombre</label>
+                                            <span>Nombre</span>
                                             <input type="text" id="nombre" name="nombre" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <!-- Last name -->
                                         <div class="md-form">
+                                            <span>Apellidos</span>
                                             <input type="text" id="apellidos" name="apellidos" class="form-control">
-                                            <label for="apellidos">Apellidos</label>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -203,8 +204,8 @@
                                     <div class="col">
                                         <!-- Identificador -->
                                         <div class="md-form">
+                                            <span>Identificador</span>
                                             <input type="text" id="identificador" name="identificador" class="form-control">
-                                            <label for="identificador">Identificador</label>
                                         </div>
                                     </div>
                                     <div class="col d-flex align-self-center">
@@ -212,7 +213,6 @@
                                             <option selected>Tipo documento</option>
                                             <option value="nif">NIF</option>
                                             <option value="nie">NIE</option>
-
                                         </select>
 
                                     </div>
@@ -220,14 +220,15 @@
 
                                 <!-- E-mail -->
                                 <div class="md-form mt-0">
+                                     <span>E-mail</span>
                                     <input type="email" id="materialRegisterFormEmail" name="email" class="form-control">
-                                    <label for="materialRegisterFormEmail">E-mail</label>
+                                   
                                 </div>
 
                                 <!-- Password -->
                                 <div class="md-form">
-                                    <input type="password" id="materialRegisterFormPassword" name="contrasena" class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
-                                    <label for="materialRegisterFormPassword">Contraseña</label>
+                                    <span>Contraseña</span>
+                                    <input type="password" id="contrasena" name="contrasena" class="form-control">
                                     <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                                         Al menos 8 caracteres
                                     </small>
@@ -235,29 +236,12 @@
 
                                 <!-- Phone number -->
                                 <div class="md-form">
+                                    <span>Número de teléfono</span>
                                     <input type="number" id="materialRegisterFormPhone" name="telefono" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
-                                    <label for="materialRegisterFormPhone">Número de teléfono</label>
-                                    <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-
-                                    </small>
-                                </div>
-
-                                <!-- Newsletter -->
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="materialRegisterFormNewsletter">
-                                    <label class="form-check-label" for="materialRegisterFormNewsletter">Subscribe to our newsletter</label>
                                 </div>
 
                                 <!-- Sign up button -->
                                 <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Registrar</button>
-
-
-                                <hr>
-
-                                <!-- Terms of service -->
-                                <p>By clicking
-                                    <em>Sign up</em> you agree to our
-                                    <a href="" target="_blank">terms of service</a>
 
                             </form>
                             <!-- Form -->

@@ -8,7 +8,7 @@
             <column name="id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="cliente" class="POJO.Cliente" fetch="select">
+        <many-to-one name="cliente" class="POJO.Cliente" fetch="select" cascade="save-update,evict,lock,merge,refresh,replicate">
             <column name="idCliente" />
         </many-to-one>
         <property name="tipo" type="string">
