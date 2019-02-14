@@ -15,7 +15,7 @@ public class ReservaBackup  implements java.io.Serializable {
      private int id;
      private Tarjeta tarjeta;
      private Viaje viaje;
-     private Integer localizador;
+     private String localizador;
      private Double precio;
      private Date fechaPago;
      private Integer numViajeros;
@@ -28,7 +28,7 @@ public class ReservaBackup  implements java.io.Serializable {
     public ReservaBackup(int id) {
         this.id = id;
     }
-    public ReservaBackup(int id, Tarjeta tarjeta, Viaje viaje, Integer localizador, Double precio, Date fechaPago, Integer numViajeros, Set ocupacionBackups) {
+    public ReservaBackup(int id, Tarjeta tarjeta, Viaje viaje, String localizador, Double precio, Date fechaPago, Integer numViajeros, Set ocupacionBackups) {
        this.id = id;
        this.tarjeta = tarjeta;
        this.viaje = viaje;
@@ -37,6 +37,16 @@ public class ReservaBackup  implements java.io.Serializable {
        this.fechaPago = fechaPago;
        this.numViajeros = numViajeros;
        this.ocupacionBackups = ocupacionBackups;
+    }
+    public ReservaBackup(Tarjeta tarjeta, Viaje viaje, String localizador, Double precio, Date fechaPago, Integer numViajeros) {
+      
+       this.tarjeta = tarjeta;
+       this.viaje = viaje;
+       this.localizador = localizador;
+       this.precio = precio;
+       this.fechaPago = fechaPago;
+       this.numViajeros = numViajeros;
+       
     }
    
     public int getId() {
@@ -60,11 +70,11 @@ public class ReservaBackup  implements java.io.Serializable {
     public void setViaje(Viaje viaje) {
         this.viaje = viaje;
     }
-    public Integer getLocalizador() {
+    public String getLocalizador() {
         return this.localizador;
     }
     
-    public void setLocalizador(Integer localizador) {
+    public void setLocalizador(String localizador) {
         this.localizador = localizador;
     }
     public Double getPrecio() {

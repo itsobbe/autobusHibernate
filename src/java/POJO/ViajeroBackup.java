@@ -33,6 +33,14 @@ public class ViajeroBackup  implements java.io.Serializable {
        this.apellidos = apellidos;
        this.ocupacionBackups = ocupacionBackups;
     }
+    public ViajeroBackup(String tipoIdentificador, String identificador, String nombre, String apellidos) {
+       
+       this.tipoIdentificador = tipoIdentificador;
+       this.identificador = identificador;
+       this.nombre = nombre;
+       this.apellidos = apellidos;
+       
+    }
    
     public int getId() {
         return this.id;

@@ -29,6 +29,13 @@ public class OcupacionBackup  implements java.io.Serializable {
        this.asiento = asiento;
        this.importe = importe;
     }
+    public OcupacionBackup(ReservaBackup reservaBackup, ViajeroBackup viajeroBackup, Integer asiento, Double importe) {
+       
+       this.reservaBackup = reservaBackup;
+       this.viajeroBackup = viajeroBackup;
+       this.asiento = asiento;
+       this.importe = importe;
+    }
    
     public int getId() {
         return this.id;

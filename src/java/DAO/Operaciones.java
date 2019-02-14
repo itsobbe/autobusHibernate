@@ -23,10 +23,14 @@ import MODELO.Salida;
 import MODELO.TrayectoHorario;
 import POJO.Cliente;
 import POJO.Ocupacion;
+import POJO.OcupacionBackup;
 import POJO.Parametros;
 import POJO.Reserva;
+import POJO.ReservaBackup;
 import POJO.Tarjeta;
+import POJO.ViajeBackup;
 import POJO.Viajero;
+import POJO.ViajeroBackup;
 import java.util.Random;
 import java.util.Set;
 
@@ -35,12 +39,12 @@ import java.util.Set;
  * @author owa_7
  */
 public class Operaciones {
-    
+
     public List devuelveEstacionesOrgin(SessionFactory SessionBuilder) {
         Transaction tx = null;
         Session sesion = SessionBuilder.openSession();
         List todo = null;
-        
+
         try {
             tx = sesion.beginTransaction();
             //Orden que trae estaciones como origen no repetidas en ruta
@@ -49,18 +53,18 @@ public class Operaciones {
 //            String orden="from Ruta r where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=2";
 //            String orden="from Ruta r,Viaje v where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=2 AND v.fechaViaje='2019-01-17'";
             Query rs = sesion.createQuery(orden);
-            
+
             todo = rs.list();
-            
+
             for (int i = 0; i < todo.size(); i++) {
                 if ((((Estacion) todo.get(i))).getRutasForEstacionOrigen().isEmpty()) {
                     todo.remove(todo.get(i));
                 }
             }
             tx.commit();
-            
+
             return todo;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -71,7 +75,7 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public List<Estacion> devuelveDestinos(SessionFactory SessionBuilder, int id) {
         //metodo que segun id devuelve el destino de esa ruta
         Transaction tx = null;
@@ -92,9 +96,9 @@ public class Operaciones {
 //                array.add(((Ruta)it.next()).getEstacionByEstacionDestino());
 //            }
             tx.commit();
-            
+
             return estacion;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -105,12 +109,12 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public List devuelveDatosBusquedaViaje(SessionFactory SessionBuilder, int origen, int destino, LocalDate fecha, int totalPasaejeros) {
         Transaction tx = null;
         Session sesion = SessionBuilder.openSession();
         List<Viaje> todo = null;
-        
+
         try {
             tx = sesion.beginTransaction();
             //Orden que trae estaciones como origen no repetidas en ruta
@@ -122,26 +126,26 @@ public class Operaciones {
             //String orden = "SELECT v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen='" + origen + "' AND r.estacionByEstacionDestino='" + destino + "' AND v.fechaViaje='" + fecha + "' AND h = v.horario AND h.ruta=r AND v.plazasLibres >='" + totalPasaejeros + "'";
             //quitado ,r
             String orden = "SELECT v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen=:vorigen AND r.estacionByEstacionDestino=:vdestino AND v.fechaViaje=:vfecha AND h = v.horario AND h.ruta=r AND v.plazasLibres >= :vtotal";
-            
+
             Query rs = sesion.createQuery(orden);
             rs.setParameter("vorigen", origen);
             rs.setParameter("vdestino", destino);
             rs.setDate("vfecha", java.sql.Date.valueOf(fecha));
             rs.setParameter("vtotal", totalPasaejeros);
             todo = rs.list();
-            
+
             for (Viaje item : todo) {
                 Hibernate.initialize(item.getHorario());
                 Hibernate.initialize(item.getHorario().getRuta());
                 Hibernate.initialize(item.getHorario().getRuta().getEstacionByEstacionDestino());
                 Hibernate.initialize(item.getHorario().getRuta().getEstacionByEstacionOrigen());
-                
+
             }
-            
+
             tx.commit();
-            
+
             return todo;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -152,35 +156,35 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public List devuelveDatosBusquedaViajeV2(SessionFactory SessionBuilder, TrayectoHorario trayectoHorario) {
         Transaction tx = null;
         Session sesion = SessionBuilder.openSession();
         List<Viaje> todo = null;
-        
+
         try {
             tx = sesion.beginTransaction();
             String orden = "SELECT v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen=:vorigen AND r.estacionByEstacionDestino=:vdestino AND v.fechaViaje=:vfecha AND h = v.horario AND h.ruta=r AND v.plazasLibres >= :vtotal";
-            
+
             Query rs = sesion.createQuery(orden);
             rs.setParameter("vorigen", trayectoHorario.getIdOrigen());
             rs.setParameter("vdestino", trayectoHorario.getIdDestino());
             rs.setDate("vfecha", java.sql.Date.valueOf(trayectoHorario.getFechaSalida()));
             rs.setParameter("vtotal", trayectoHorario.getNumViajeros());
             todo = rs.list();
-            
+
             for (Viaje item : todo) {
                 Hibernate.initialize(item.getHorario());
                 Hibernate.initialize(item.getHorario().getRuta());
                 Hibernate.initialize(item.getHorario().getRuta().getEstacionByEstacionDestino());
                 Hibernate.initialize(item.getHorario().getRuta().getEstacionByEstacionOrigen());
-                
+
             }
-            
+
             tx.commit();
-            
+
             return todo;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -191,7 +195,7 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public List devuelveOcupacion(SessionFactory SessionBuilder, int idViaje) {
         Transaction tx = null;
         Session sesion = SessionBuilder.openSession();
@@ -211,11 +215,11 @@ public class Operaciones {
                     a.add(i);
                 }
             }
-            
+
             tx.commit();
-            
+
             return todo;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -226,7 +230,7 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public List pruebas(SessionFactory SessionBuilder) {
         Transaction tx = null;
         Session sesion = SessionBuilder.openSession();
@@ -237,7 +241,7 @@ public class Operaciones {
             String orden = "from Ruta r where r.estacionByEstacionOrigen = 1";
 //            String orden="SELECT r, v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen='"+origen+"' AND r.estacionByEstacionDestino='"+destino+"' AND v.fechaViaje='"+fecha+"' AND h = v.horario AND h.ruta=r AND v.plazasLibres >='"+totalPasaejeros+"'";
             Query rs = sesion.createQuery(orden);
-            
+
             List<Ruta> todo = rs.list();
 //            Iterator it = todo.iterator();
 //            //Ruta ruta=new Ruta();
@@ -252,9 +256,9 @@ public class Operaciones {
                 item.setEstacionByEstacionDestino(estacion);
             }
             tx.commit();
-            
+
             return todo;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -265,7 +269,7 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public Parametros devuelveParametros(SessionFactory SessionBuilder) throws ApplicationException {
         Session sesion = SessionBuilder.openSession();
         Transaction tx = null;
@@ -275,10 +279,10 @@ public class Operaciones {
             String orden = "from Parametros";
             Query query = sesion.createQuery(orden);
             parametro = (Parametros) query.uniqueResult();
-            
+
             tx.commit();
             return parametro;
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -289,14 +293,14 @@ public class Operaciones {
             sesion.close();
         }
     }
-    
+
     public Cliente login(SessionFactory SessionBuilder, String email, String contrasena) throws ApplicationException {
         Session sesion = SessionBuilder.openSession();
         Transaction tx = null;
         Cliente cliente = null;
         try {
             tx = sesion.beginTransaction();
-            
+
             String orden = "from Cliente where email=:vemail AND contrasena=:vcontrasena";
             Query q = sesion.createQuery(orden);
             q.setParameter("vemail", email);
@@ -318,9 +322,9 @@ public class Operaciones {
         } finally {
             sesion.close();
         }
-        
+
     }
-    
+
     public void guardado(SessionFactory SessionBuilder, Reserva reserva) throws ApplicationException {
         Session sesion = SessionBuilder.openSession();
         Transaction tx = null;
@@ -364,11 +368,11 @@ public class Operaciones {
 
             //generamos localizador
             reserva.setLocalizador(generarLocalizador());
-            
+
             sesion.saveOrUpdate(reserva);
-            
+
             tx.commit();
-            
+
         } catch (HibernateException HE) {
             HE.printStackTrace();
             if (tx != null) {
@@ -380,7 +384,51 @@ public class Operaciones {
         }
     }
 
-    //metodo para crear localizador para reserva
+    public void viajeRealizado(SessionFactory SessionBuilder, int idViaje) throws ApplicationException {
+        Session sesion = SessionBuilder.openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            //buscamos el viaje por id
+            Viaje viaje = (Viaje) sesion.get(Viaje.class, idViaje);
+            //creamos obj back up 
+
+            ArrayList<ReservaBackup> reservaBackup = new ArrayList();
+            ArrayList<ViajeroBackup> viajeroBackup = new ArrayList();
+            ArrayList<OcupacionBackup> ocupacionBackup = new ArrayList();
+            ViajeBackup viajeBackuo = new ViajeBackup();
+            ViajeroBackup viajeroup = new ViajeroBackup();
+            //metemos los datos en obj backup
+            for (Reserva item : (Set<Reserva>) viaje.getReservas()) {
+                //creo que no necesario !!!******** en todo caso lo tendria que hacer antes
+                Hibernate.initialize(item);
+                reservaBackup.add(new ReservaBackup(item.getTarjeta(), item.getViaje(), item.getLocalizador(), item.getPrecio(), item.getFechaPago(), item.getNumViajeros()));
+                for (Ocupacion itemOcupacion : (Set<Ocupacion>) item.getOcupacions()) {
+                    Hibernate.initialize(itemOcupacion);
+                    viajeroup=new ViajeroBackup(itemOcupacion.getViajero().getTipoIdentificador(), itemOcupacion.getViajero().getIdentificador(), itemOcupacion.getViajero().getNombre(), itemOcupacion.getViajero().getApellidos());
+                    viajeroBackup.add(viajeroup);
+                    ocupacionBackup.add(new OcupacionBackup(reservaBackup.get(reservaBackup.size() - 1), viajeroup, itemOcupacion.getAsiento(), itemOcupacion.getImporte()));
+                    //aqui haria set a vijaero back up con obj ocupacion y a vaijero bckup igual con set ocup
+                    
+                    //borro del obj viaje los viajeros que tienen mas de una ocupacion
+                    
+                    
+                }
+            }
+
+            tx.commit();
+        } catch (HibernateException HE) {
+            HE.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new ApplicationException(HE.getLocalizedMessage(), 0, HE.getMessage());
+        } finally {
+            sesion.close();
+        }
+    }
+
+    //!---- metodo para crear localizador para reserva  ---- !
     protected String generarLocalizador() {
         String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder salt = new StringBuilder();
@@ -391,7 +439,7 @@ public class Operaciones {
         }
         String saltStr = salt.toString();
         return saltStr;
-        
+
     }
 
 //final clase operaciones

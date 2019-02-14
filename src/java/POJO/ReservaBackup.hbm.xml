@@ -14,7 +14,7 @@
         <many-to-one name="viaje" class="POJO.Viaje" fetch="select">
             <column name="idViaje" />
         </many-to-one>
-        <property name="localizador" type="java.lang.Integer">
+        <property name="localizador" type="string">
             <column name="localizador" />
         </property>
         <property name="precio" type="java.lang.Double">

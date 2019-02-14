@@ -156,7 +156,7 @@
                                 <span>Apellidos</span>
                                 <input type="text" id="totalPasajero" name="apellidos<%=i%>" class="form-control mt-1 mb-1">
 
-                                <div class="asientos">
+                                <div class="asientos d-flex d-inline-flex">
 
 
                                     <!-- Default unchecked -->
@@ -169,7 +169,7 @@
 
                                     %>
 
-                                    <input type="checkbox" name="asiento<%=i%>" value="<%=j%>"
+                                    <input type="checkbox" class="p-2 m-2" name="asiento<%=i%>" value="<%=j%>"
 
                                            <%
                                                if (a.contains(j)) {

@@ -36,6 +36,10 @@
         <servlet-name>ControladorMontarObjReserva</servlet-name>
         <servlet-class>BBL.ControladorMontarObjReserva</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorConfirmarViaje</servlet-name>
+        <servlet-class>BBL.ControladorConfirmarViaje</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>ControladorMontarObjReserva</servlet-name>
         <url-pattern>/ControladorMontarObjReserva</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorConfirmarViaje</servlet-name>
+        <url-pattern>/ControladorConfirmarViaje</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
