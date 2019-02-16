@@ -11,7 +11,7 @@ import java.util.Set;
 public class ViajeroBackup  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private String tipoIdentificador;
      private String identificador;
      private String nombre;
@@ -25,7 +25,7 @@ public class ViajeroBackup  implements java.io.Serializable {
     public ViajeroBackup(int id) {
         this.id = id;
     }
-    public ViajeroBackup(int id, String tipoIdentificador, String identificador, String nombre, String apellidos, Set ocupacionBackups) {
+    public ViajeroBackup(Integer id, String tipoIdentificador, String identificador, String nombre, String apellidos, Set ocupacionBackups) {
        this.id = id;
        this.tipoIdentificador = tipoIdentificador;
        this.identificador = identificador;
@@ -42,11 +42,11 @@ public class ViajeroBackup  implements java.io.Serializable {
        
     }
    
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public String getTipoIdentificador() {

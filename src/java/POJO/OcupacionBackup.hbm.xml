@@ -4,14 +4,14 @@
 <!-- Generated 23-ene-2019 16:14:25 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJO.OcupacionBackup" table="ocupacion_backup" catalog="autobus_obb" optimistic-lock="version">
-        <id name="id" type="int">
+        <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="reservaBackup" class="POJO.ReservaBackup" fetch="select">
             <column name="idReserva" />
         </many-to-one>
-        <many-to-one name="viajeroBackup" class="POJO.ViajeroBackup" fetch="select">
+        <many-to-one name="viajeroBackup" class="POJO.ViajeroBackup" fetch="select" cascade="all">
             <column name="idViajero" />
         </many-to-one>
         <property name="asiento" type="java.lang.Integer">

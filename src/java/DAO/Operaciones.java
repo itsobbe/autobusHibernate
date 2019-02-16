@@ -31,6 +31,7 @@ import POJO.Tarjeta;
 import POJO.ViajeBackup;
 import POJO.Viajero;
 import POJO.ViajeroBackup;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -333,6 +334,7 @@ public class Operaciones {
 
         try {
             tx = sesion.beginTransaction();
+            
             //select de viajeros y cogemos su id 
             for (Ocupacion item : (Set<Ocupacion>) reserva.getOcupacions()) {
                 Query orden = sesion.createQuery("from Viajero where identificador=:vnumero");
@@ -340,16 +342,16 @@ public class Operaciones {
                 if (orden.uniqueResult() != null) {
 //                        reserva.setTarjeta((Tarjeta) orden.uniqueResult());
                     Viajero viajeroPersistent = (Viajero) orden.uniqueResult();
-                    if (sesion.contains(viajeroPersistent)) {
-                        sesion.evict(viajeroPersistent);
-                    }
-                    item.getViajero().setId(viajeroPersistent.getId());
-//                    viajeroPersistent.setApellidos(item.getViajero().getApellidos());
-//                    viajeroPersistent.setIdentificador(item.getViajero().getIdentificador());
-//                    viajeroPersistent.setNombre(item.getViajero().getNombre());
-//                    viajeroPersistent.setOcupacions(item.getViajero().getOcupacions());
-//                    viajeroPersistent.setTipoIdentificador(item.getViajero().getTipoIdentificador());
-//                    item.setViajero(viajeroPersistent);
+//                    if (sesion.contains(viajeroPersistent)) {
+//                        sesion.evict(viajeroPersistent);
+//                    }
+//                    item.getViajero().setId(viajeroPersistent.getId());
+                    viajeroPersistent.setApellidos(item.getViajero().getApellidos());
+                    viajeroPersistent.setIdentificador(item.getViajero().getIdentificador());
+                    viajeroPersistent.setNombre(item.getViajero().getNombre());
+                    viajeroPersistent.setOcupacions(item.getViajero().getOcupacions());
+                    viajeroPersistent.setTipoIdentificador(item.getViajero().getTipoIdentificador());
+                    item.setViajero(viajeroPersistent);
                 }
             }
             //cargamos tarjeta si procede
@@ -391,30 +393,77 @@ public class Operaciones {
             tx = sesion.beginTransaction();
             //buscamos el viaje por id
             Viaje viaje = (Viaje) sesion.get(Viaje.class, idViaje);
+            
             //creamos obj back up 
-
             ArrayList<ReservaBackup> reservaBackup = new ArrayList();
             ArrayList<ViajeroBackup> viajeroBackup = new ArrayList();
             ArrayList<OcupacionBackup> ocupacionBackup = new ArrayList();
-            ViajeBackup viajeBackuo = new ViajeBackup();
+            ViajeBackup viajeBackup = new ViajeBackup();
             ViajeroBackup viajeroup = new ViajeroBackup();
+            
+            viajeBackup=new ViajeBackup(viaje.getHorario(), viaje.getFechaViaje(), viaje.getPlazasLibres(), new HashSet(reservaBackup));
+            
             //metemos los datos en obj backup
             for (Reserva item : (Set<Reserva>) viaje.getReservas()) {
                 //creo que no necesario !!!******** en todo caso lo tendria que hacer antes
-                Hibernate.initialize(item);
-                reservaBackup.add(new ReservaBackup(item.getTarjeta(), item.getViaje(), item.getLocalizador(), item.getPrecio(), item.getFechaPago(), item.getNumViajeros()));
+                //Hibernate.initialize(item);
+                
+                ReservaBackup reservaobj=new ReservaBackup(item.getTarjeta(), viajeBackup, item.getLocalizador(), item.getPrecio(), item.getFechaPago(), item.getNumViajeros());
+                
+                
+                //aqui podria poner save de reserva
+                
                 for (Ocupacion itemOcupacion : (Set<Ocupacion>) item.getOcupacions()) {
-                    Hibernate.initialize(itemOcupacion);
+                   // Hibernate.initialize(itemOcupacion);
                     viajeroup=new ViajeroBackup(itemOcupacion.getViajero().getTipoIdentificador(), itemOcupacion.getViajero().getIdentificador(), itemOcupacion.getViajero().getNombre(), itemOcupacion.getViajero().getApellidos());
-                    viajeroBackup.add(viajeroup);
-                    ocupacionBackup.add(new OcupacionBackup(reservaBackup.get(reservaBackup.size() - 1), viajeroup, itemOcupacion.getAsiento(), itemOcupacion.getImporte()));
+                    Query q = sesion.createQuery("from ViajeroBackup where identificador = :viden");
+                    q.setParameter("viden", viajeroup.getIdentificador());
+                    ViajeroBackup viajeroBackupPersistent = (ViajeroBackup)q.uniqueResult();
+                    if(viajeroBackupPersistent != null){
+                        viajeroBackupPersistent.setApellidos(viajeroup.getApellidos());
+                        viajeroBackupPersistent.setNombre(viajeroup.getNombre());
+                        viajeroBackupPersistent.setIdentificador(viajeroup.getIdentificador());
+                        viajeroBackupPersistent.setTipoIdentificador(viajeroup.getTipoIdentificador());
+                        viajeroBackupPersistent.setOcupacionBackups(viajeroup.getOcupacionBackups());
+                        
+                        viajeroBackup.add(viajeroBackupPersistent);
+                    
+                        ocupacionBackup.add(new OcupacionBackup(reservaobj, viajeroBackupPersistent, itemOcupacion.getAsiento(), itemOcupacion.getImporte()));
+                    }else{
+                        viajeroBackup.add(viajeroup);
+                    
+                        ocupacionBackup.add(new OcupacionBackup(reservaobj, viajeroup, itemOcupacion.getAsiento(), itemOcupacion.getImporte()));
+                    }
+                    
                     //aqui haria set a vijaero back up con obj ocupacion y a vaijero bckup igual con set ocup
                     
                     //borro del obj viaje los viajeros que tienen mas de una ocupacion
                     
+                    //queria borrar los vijaeros dle obj viaje pero debido a hacer en la transaccion 
+                    //pongo en ocup en viajero cascade todo menos delete y asi los viajeros los borro a mano aqui
+                    if(itemOcupacion.getViajero().getOcupacions().size() == 1){
+                        sesion.delete(itemOcupacion.getViajero());
+//                        reserva.getOcupacions().remove(tx)
+                    }
                     
+                    //aqui podria save ocupacion y save viajero si toca o save or update
                 }
+                //meto al obj reserva backup la ocupa backup para unirlos
+                reservaobj.setOcupacionBackups(new HashSet(ocupacionBackup));
+                //meto en array de reservas
+                reservaBackup.add(reservaobj);
+                
             }
+            
+            viajeBackup.setReservaBackups(new HashSet(reservaBackup));
+            
+            
+            //guardado de viaje back up con todo dentro
+            sesion.saveOrUpdate(viajeBackup);
+            
+            //borrado de viaje 
+            //necesito ver si el viajero tiene pendientes mas viajes y si true no borrar
+            sesion.delete(viaje);
 
             tx.commit();
         } catch (HibernateException HE) {

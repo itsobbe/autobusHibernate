@@ -50,6 +50,7 @@ public class ControladorConfirmarViaje extends HttpServlet {
                 int idViaje=1;
                 new Operaciones().viajeRealizado(SessionBuilder,idViaje);
             } catch (Exception e) {
+                out.println(e);
             }
 
             /* TODO output your page here. You may use following sample code. */

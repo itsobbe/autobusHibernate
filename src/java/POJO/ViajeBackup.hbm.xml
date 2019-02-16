@@ -4,9 +4,9 @@
 <!-- Generated 23-ene-2019 16:14:25 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJO.ViajeBackup" table="viaje_backup" catalog="autobus_obb" optimistic-lock="version">
-        <id name="id" type="int">
+        <id name="id" type="java.lang.Integer">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="horario" class="POJO.Horario" fetch="select">
             <column name="idHorarioViaje" />
@@ -17,5 +17,11 @@
         <property name="plazasLibres" type="java.lang.Integer">
             <column name="plazasLibres" />
         </property>
+        <set name="reservaBackups" table="reserva_backup" inverse="true" lazy="true" fetch="select" cascade="all">
+            <key>
+                <column name="idViaje" />
+            </key>
+            <one-to-many class="POJO.ReservaBackup" />
+        </set>
     </class>
 </hibernate-mapping>

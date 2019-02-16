@@ -26,8 +26,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
         <!-- Material Design Bootstrap -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/css/mdb.min.css" rel="stylesheet">
-        <link href="../CSS/css.css" rel="stylesheet">
-        <link href="../CSS/billete.css" rel="stylesheet">
+        <link href="CSS/css.css" rel="stylesheet">
+        <link href="CSS/billete.css" rel="stylesheet">
         
         <!-- Bootstrap CSS -->
         <title>Busawa</title>
@@ -156,7 +156,7 @@
                             //LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneOffset.systemDefault());  
                             
                             
-                            for (int i = 0; i < 1; i++) {
+                            for (int i = 0; i < reserva.getNumViajeros(); i++) {
 
 
                     %>
@@ -239,7 +239,7 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
         
-        <script type="text/javascript" src="../JS/jquery.qrcode.min.js"></script>
+        <script type="text/javascript" src="JS/jquery.qrcode.min.js"></script>
          <script>
             $(document).ready(function() {
                 var billetes=document.getElementsByClassName("qrcode");

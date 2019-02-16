@@ -12,9 +12,9 @@ import java.util.Set;
 public class ReservaBackup  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private Tarjeta tarjeta;
-     private Viaje viaje;
+     private ViajeBackup viajeBackup;
      private String localizador;
      private Double precio;
      private Date fechaPago;
@@ -24,24 +24,20 @@ public class ReservaBackup  implements java.io.Serializable {
     public ReservaBackup() {
     }
 
-	
-    public ReservaBackup(int id) {
-        this.id = id;
-    }
-    public ReservaBackup(int id, Tarjeta tarjeta, Viaje viaje, String localizador, Double precio, Date fechaPago, Integer numViajeros, Set ocupacionBackups) {
+    public ReservaBackup(Integer id, Tarjeta tarjeta, ViajeBackup viajeBackup, String localizador, Double precio, Date fechaPago, Integer numViajeros, Set ocupacionBackups) {
        this.id = id;
        this.tarjeta = tarjeta;
-       this.viaje = viaje;
+       this.viajeBackup = viajeBackup;
        this.localizador = localizador;
        this.precio = precio;
        this.fechaPago = fechaPago;
        this.numViajeros = numViajeros;
        this.ocupacionBackups = ocupacionBackups;
     }
-    public ReservaBackup(Tarjeta tarjeta, Viaje viaje, String localizador, Double precio, Date fechaPago, Integer numViajeros) {
+    public ReservaBackup(Tarjeta tarjeta, ViajeBackup viajeBackup, String localizador, Double precio, Date fechaPago, Integer numViajeros) {
       
        this.tarjeta = tarjeta;
-       this.viaje = viaje;
+       this.viajeBackup = viajeBackup;
        this.localizador = localizador;
        this.precio = precio;
        this.fechaPago = fechaPago;
@@ -49,11 +45,11 @@ public class ReservaBackup  implements java.io.Serializable {
        
     }
    
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public Tarjeta getTarjeta() {
@@ -63,12 +59,12 @@ public class ReservaBackup  implements java.io.Serializable {
     public void setTarjeta(Tarjeta tarjeta) {
         this.tarjeta = tarjeta;
     }
-    public Viaje getViaje() {
-        return this.viaje;
+    public ViajeBackup getViajeBackup() {
+        return this.viajeBackup;
     }
     
-    public void setViaje(Viaje viaje) {
-        this.viaje = viaje;
+    public void setViajeBackup(ViajeBackup viajeBackup) {
+        this.viajeBackup = viajeBackup;
     }
     public String getLocalizador() {
         return this.localizador;

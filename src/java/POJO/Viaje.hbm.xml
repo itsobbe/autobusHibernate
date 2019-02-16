@@ -17,17 +17,12 @@
         <property name="plazasLibres" type="java.lang.Integer">
             <column name="plazasLibres" />
         </property>
-        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select" cascade="all">
             <key>
                 <column name="idViaje" />
             </key>
             <one-to-many class="POJO.Reserva" />
         </set>
-        <set name="reservaBackups" table="reserva_backup" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="idViaje" />
-            </key>
-            <one-to-many class="POJO.ReservaBackup" />
-        </set>
+        
     </class>
 </hibernate-mapping>

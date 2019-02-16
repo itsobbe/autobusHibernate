@@ -9,7 +9,7 @@ package POJO;
 public class OcupacionBackup  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
      private ReservaBackup reservaBackup;
      private ViajeroBackup viajeroBackup;
      private Integer asiento;
@@ -18,11 +18,7 @@ public class OcupacionBackup  implements java.io.Serializable {
     public OcupacionBackup() {
     }
 
-	
-    public OcupacionBackup(int id) {
-        this.id = id;
-    }
-    public OcupacionBackup(int id, ReservaBackup reservaBackup, ViajeroBackup viajeroBackup, Integer asiento, Double importe) {
+    public OcupacionBackup(Integer id, ReservaBackup reservaBackup, ViajeroBackup viajeroBackup, Integer asiento, Double importe) {
        this.id = id;
        this.reservaBackup = reservaBackup;
        this.viajeroBackup = viajeroBackup;
@@ -37,11 +33,11 @@ public class OcupacionBackup  implements java.io.Serializable {
        this.importe = importe;
     }
    
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public ReservaBackup getReservaBackup() {

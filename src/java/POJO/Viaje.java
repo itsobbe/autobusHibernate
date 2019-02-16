@@ -17,17 +17,17 @@ public class Viaje  implements java.io.Serializable {
      private Date fechaViaje;
      private Integer plazasLibres;
      private Set reservas = new HashSet(0);
-     private Set reservaBackups = new HashSet(0);
+     //private Set reservaBackups = new HashSet(0);
 
     public Viaje() {
     }
 
-    public Viaje(Horario horario, Date fechaViaje, Integer plazasLibres, Set reservas, Set reservaBackups) {
+    public Viaje(Horario horario, Date fechaViaje, Integer plazasLibres, Set reservas) {
        this.horario = horario;
        this.fechaViaje = fechaViaje;
        this.plazasLibres = plazasLibres;
        this.reservas = reservas;
-       this.reservaBackups = reservaBackups;
+       //this.reservaBackups = reservaBackups;
     }
    
     public Integer getId() {
@@ -65,13 +65,13 @@ public class Viaje  implements java.io.Serializable {
     public void setReservas(Set reservas) {
         this.reservas = reservas;
     }
-    public Set getReservaBackups() {
-        return this.reservaBackups;
-    }
-    
-    public void setReservaBackups(Set reservaBackups) {
-        this.reservaBackups = reservaBackups;
-    }
+//    public Set getReservaBackups() {
+//        return this.reservaBackups;
+//    }
+//    
+//    public void setReservaBackups(Set reservaBackups) {
+//        this.reservaBackups = reservaBackups;
+//    }
 
 
 
