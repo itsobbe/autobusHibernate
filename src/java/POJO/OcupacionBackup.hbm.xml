@@ -11,7 +11,7 @@
         <many-to-one name="reservaBackup" class="POJO.ReservaBackup" fetch="select">
             <column name="idReserva" />
         </many-to-one>
-        <many-to-one name="viajeroBackup" class="POJO.ViajeroBackup" fetch="select" cascade="all">
+        <many-to-one name="viajeroBackup" class="POJO.ViajeroBackup" fetch="select" cascade="save-update">
             <column name="idViajero" />
         </many-to-one>
         <property name="asiento" type="java.lang.Integer">

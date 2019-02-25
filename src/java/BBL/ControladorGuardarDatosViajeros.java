@@ -36,6 +36,7 @@ public class ControladorGuardarDatosViajeros extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
             
@@ -73,6 +74,9 @@ public class ControladorGuardarDatosViajeros extends HttpServlet {
 //                  response.sendRedirect("VISTAS/VistaResumenCompra.jsp");
                 
             } catch (Exception e) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
+                request.setAttribute("error", e);
+                requestDispatcher.forward(request, response);
             }
             
             

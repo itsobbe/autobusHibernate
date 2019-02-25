@@ -225,9 +225,7 @@
 
                 </div>
             </div>
-            <footer class="text-center navbar-dark info-color d-flex align-items-center justify-content-center" style="height: 90px">
-                <p class="text-white">IES Leonardo Da Vinci - 2019</p>
-            </footer>
+            
         </div>
 
        <!-- JQuery -->

@@ -153,12 +153,12 @@
                                         <!-- num tarj -->
                                         <label>
 
-                                            <input type="number" name="tarjetaNueva" id="numeroNuevo" class="form-control mb-4" placeholder="Nºtarjeta">
+                                            <input type="number" id="tarjetaNueva" name="tarjetaNueva" id="numeroNuevo" class="form-control mb-4" placeholder="Nºtarjeta">
                                         </label>
                                     </div>
                                     <div class="col">
                                         <!-- tipo -->
-                                        <select name="tarjetaNuevaTipo" class="browser-default custom-select mb-4">
+                                        <select name="tarjetaNuevaTipo" id="tarjetaNuevaTipo" class="browser-default custom-select mb-4">
                                             <option value="" disabled>Elige</option>
                                             <option value="1" selected>Mastercard</option>
                                         </select>
@@ -176,13 +176,13 @@
                                         <label>
                                             O elija una tarjeta de un anterior pago
 
-                                            <select name="tarjetaVieja" class="browser-default custom-select mb-4">
-
+                                            <select name="tarjetaVieja" onchange="desactiva(event)" class="browser-default custom-select mb-4">
+                                                <option value="x" selected>Elige</option>
                                                 <%                                                    //por cada tajeta que tenga el cliente mostramos 4 num de tarjta y como value le damos el id de atrjeta    
                                                     for (Tarjeta item : (Set<Tarjeta>) cliente.getTarjetas()) {
                                                 %>
-                                                <option value="" selected>Elige</option>
-                                                <option value="<%= item.getId()%>"><%= item.getNumeroString().substring(5)%></option>
+                                                
+                                                <option value="<%= item.getId()%>">********<%= item.getNumeroString().substring(12)%></option>
                                                 <%
                                                         //cerramos bucle tarjeta
                                                     }
@@ -200,14 +200,14 @@
                                     <div class="col">
                                         <label>
                                             Caducidad
-                                            <input name="caducidad" id="caducidad" class="form-control mb-4" type="month" min="2019-03" value="2019-03" id="example-month-input">
+                                            <input name="caducidad" id="caducidad" class="form-control mb-4" type="month" min="2019-03" value="2019-03" id="example-month-input" required>
                                         </label>
 
                                     </div>
                                     <div class="col">
                                         <label>
                                             Código CVV
-                                            <input type="number" id="cvv" name="cvv" id="defaultContactFormName" class="form-control mb-4" placeholder="CVV">
+                                            <input type="number" id="cvv" name="cvv" id="defaultContactFormName" class="form-control mb-4" placeholder="CVV" required>
                                         </label>
                                     </div>
                                 </div>
@@ -215,13 +215,13 @@
                                     <div class="col">
                                         <label>
                                             Nombre
-                                            <input type="text" name="nombre" id="defaultContactFormName" class="form-control mb-4" value="<%= cliente.getNombre()%>">
+                                            <input type="text" name="nombre" id="defaultContactFormName" class="form-control mb-4" value="<%= cliente.getNombre()%>" required>
                                         </label>
                                     </div>
                                     <div class="col">
                                         <label>
                                             Apellidos
-                                            <input type="text" name="apellidos" id="defaultContactFormName" class="form-control mb-4" value="<%= cliente.getApellido()%>">
+                                            <input type="text" name="apellidos" id="defaultContactFormName" class="form-control mb-4" value="<%= cliente.getApellido()%>" required>
                                         </label>
                                     </div>
                                 </div>
@@ -239,9 +239,7 @@
 
             <!-- conainter end -->
         </div>
-        <footer class="text-center navbar-dark info-color d-flex align-items-center justify-content-center" style="height: 90px">
-            <p class="text-white">IES Leonardo Da Vinci - 2019</p>
-        </footer>
+        
 
         <!-- final div img-->  
     </div>
@@ -269,17 +267,26 @@
             var fecha=fecha.split('-');
             var cvv=document.getElementById('cvv').value;
              //&& creditcard.isExpirationDateValid()
-             alert(fecha[0].toString());
+             //alert(fecha[0].toString());
             if(creditcard.isValid(numeroTarjeta.toString()) && creditcard.isExpirationDateValid(fecha[1].toString(), fecha[0].toString()) && creditcard.isSecurityCodeValid(numeroTarjeta.toString(), cvv.toString())) {
                 
-                alert("sii");
+                return true;
 
             }else{
                 alert("Error en tarjeta crédito");
                 return false;
     }
 }
-        
+        function desactiva(event){
+            
+            if(event.target.value !== "x"){
+                document.getElementById("tarjetaNueva").disabled=true;
+                document.getElementById("tarjetaNuevaTipo").disabled=true;
+            }else{
+                document.getElementById("tarjetaNueva").disabled=false;
+                document.getElementById("tarjetaNuevaTipo").disabled=false;
+            }
+        }
     </script>
 </body>
 </html>

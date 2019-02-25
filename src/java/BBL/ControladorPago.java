@@ -43,6 +43,7 @@ public class ControladorPago extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             try {
@@ -95,6 +96,9 @@ public class ControladorPago extends HttpServlet {
                 requestDispatcher.forward(request, response);
 
             } catch (Exception e) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
+                request.setAttribute("error", e);
+                requestDispatcher.forward(request, response);
             }
 
             /* TODO output your page here. You may use following sample code. */

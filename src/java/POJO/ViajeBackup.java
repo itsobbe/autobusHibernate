@@ -15,18 +15,20 @@ public class ViajeBackup  implements java.io.Serializable {
      private Integer id;
      private Horario horario;
      private Date fechaViaje;
+     private Date fechaBaja;
      private Integer plazasLibres;
      private Set reservaBackups = new HashSet(0);
     public ViajeBackup() {
     }
 
     
-    public ViajeBackup(Integer id, Horario horario, Date fechaViaje, Integer plazasLibres, Set reservaBackups) {
+    public ViajeBackup(Integer id, Horario horario, Date fechaViaje,Date fechaBaja, Integer plazasLibres, Set reservaBackups) {
        this.id = id;
        this.horario = horario;
        this.fechaViaje = fechaViaje;
        this.plazasLibres = plazasLibres;
        this.reservaBackups = reservaBackups;
+       this.fechaBaja=fechaBaja;
     }
     public ViajeBackup(Horario horario, Date fechaViaje, Integer plazasLibres, Set reservaBackups) {
        
@@ -34,6 +36,14 @@ public class ViajeBackup  implements java.io.Serializable {
        this.fechaViaje = fechaViaje;
        this.plazasLibres = plazasLibres;
        this.reservaBackups = reservaBackups;
+    }
+
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
    
     public Integer getId() {

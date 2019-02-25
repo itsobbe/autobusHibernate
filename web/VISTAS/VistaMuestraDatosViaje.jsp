@@ -171,7 +171,7 @@
 
                                     <h4 class="h4 mb-4"><i class="fas fa-bus-alt text-primary"><%=datosViaje.get(i).getHorario().getRuta().getEstacionByEstacionOrigen().getNombre()%></i></h4>
 
-                                    <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora salida:<%= datosViaje.get(i).getHorario().getHoraSalida()%></i></p>
+                                    <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora salida:<%= new SimpleDateFormat("HH:mm").format(datosViaje.get(i).getHorario().getHoraSalida()) %></i></p>
                                     <p class="font-weight-normal align-self-start"><i class="fas fa-arrow-right"></i> <i
                                             class="fas fa-stopwatch"> <%= a.format(datosViaje.get(i).getHorario().getRuta().getDuracion()) %> MIN</i> <i class="fas fa-arrow-right"></i></p>
                                     <p class="font-weight-normal align-self-end"><i class="far fa-clock">Hora llegada:<%= ldt.plusMinutes(datosViaje.get(i).getHorario().getRuta().getDuracion().longValue()).format(DateTimeFormatter.ofPattern("HH:mm"))%></i></p>
@@ -202,9 +202,7 @@
 
                 </div>
             </div>
-            <footer class="text-center navbar-dark info-color d-flex align-items-center justify-content-center" style="height: 90px">
-                <p class="text-white">IES Leonardo Da Vinci - 2019</p>
-            </footer>
+            
         </div>
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

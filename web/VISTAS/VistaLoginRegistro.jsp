@@ -132,28 +132,16 @@
                                 <!-- Email -->
                                 <div class="md-form">
                                     <span>E-mail</span>
-                                    <input type="email" id="totalPasajero" name="emailLogin" class="form-control">
+                                    <input type="email" id="totalPasajero" name="emailLogin" class="form-control" required>
                                 </div>
 
                                 <!-- Password -->
                                 <div class="md-form">
                                     <span>Contraseña</span>
-                                    <input type="password" id="contrasenaLogin" name="contrasenaLogin" class="form-control">
+                                    <input type="password" id="contrasenaLogin" name="contrasenaLogin" class="form-control" required>
                                 </div>
 
-                                <div class="d-flex justify-content-around">
-                                    <div>
-                                        <!-- Remember me -->
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-                                            <label class="form-check-label" for="materialLoginFormRemember">Recuerdame</label>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <!-- Forgot password -->
-                                        <a href="">¿Contraseña olvidada?</a>
-                                    </div>
-                                </div>
+                                
 
                                 <!-- Sign in button -->
                                 <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Iniciar sesión</button>
@@ -180,21 +168,21 @@
                         <div class="card-body px-lg-5 pt-0">
 
                             <!-- Form -->
-                            <form action="../ControladorRegistrarClientePago" class="text-center" style="color: #757575;">
+                            <form action="../ControladorRegistrarClientePago" onsubmit="return validaDni();" class="text-center" style="color: #757575;">
 
                                 <div class="form-row">
                                     <div class="col">
                                         <!-- First name -->
                                         <div class="md-form">
                                             <span>Nombre</span>
-                                            <input type="text" id="nombre" name="nombre" class="form-control">
+                                            <input type="text" id="nombre" name="nombre" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <!-- Last name -->
                                         <div class="md-form">
                                             <span>Apellidos</span>
-                                            <input type="text" id="apellidos" name="apellidos" class="form-control">
+                                            <input type="text" id="apellidos" name="apellidos" class="form-control" required>
                                             
                                         </div>
                                     </div>
@@ -205,11 +193,11 @@
                                         <!-- Identificador -->
                                         <div class="md-form">
                                             <span>Identificador</span>
-                                            <input type="text" id="identificador" name="identificador" class="form-control">
+                                            <input type="text" id="identificador" name="identificador" id="identificador" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col d-flex align-self-center">
-                                        <select class="browser-default custom-select" name="tipoIdentificador">
+                                        <select class="browser-default custom-select" name="tipoIdentificador" id="tipo" required> 
                                             <option selected>Tipo documento</option>
                                             <option value="nif">NIF</option>
                                             <option value="nie">NIE</option>
@@ -221,14 +209,14 @@
                                 <!-- E-mail -->
                                 <div class="md-form mt-0">
                                      <span>E-mail</span>
-                                    <input type="email" id="materialRegisterFormEmail" name="email" class="form-control">
+                                    <input type="email" id="materialRegisterFormEmail" name="email" class="form-control" required>
                                    
                                 </div>
 
                                 <!-- Password -->
                                 <div class="md-form">
                                     <span>Contraseña</span>
-                                    <input type="password" id="contrasena" name="contrasena" class="form-control">
+                                    <input type="password" id="contrasena" name="contrasena" class="form-control" required>
                                     <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                                         Al menos 8 caracteres
                                     </small>
@@ -237,7 +225,7 @@
                                 <!-- Phone number -->
                                 <div class="md-form">
                                     <span>Número de teléfono</span>
-                                    <input type="number" id="materialRegisterFormPhone" name="telefono" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+                                    <input type="number" id="materialRegisterFormPhone" name="telefono" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock" required>
                                 </div>
 
                                 <!-- Sign up button -->
@@ -257,15 +245,11 @@
 
             <!-- conainter end -->
         </div>
-        <footer class="text-center navbar-dark info-color d-flex align-items-center justify-content-center" style="height: 90px">
-            <p class="text-white">IES Leonardo Da Vinci - 2019</p>
-        </footer>
+        
 
         <!-- final div img-->  
     </div>
     <script>
-
-
 
         $('.md-form').on('focusout', function (e) {
 
@@ -275,5 +259,42 @@
         });
 
     </script>
+       <script>
+            function validaDni(){
+                
+                    //var dni = document.getElementsByName("identificador"+i)[0].value;
+                    var dni=document.getElementById("identificador").value;
+                    var validador=true;
+                    var numero, let, letra;
+                    var expresion_regular_dni = /^[XYZ]?\d{5,8}[A-Z]$/;
+                    
+                    dni = dni.toUpperCase();
+                    
+                    if (expresion_regular_dni.test(dni) === true) {
+                        numero = dni.substr(0, dni.length - 1);
+                        numero = numero.replace('X', 0);
+                        numero = numero.replace('Y', 1);
+                        numero = numero.replace('Z', 2);
+                        let = dni.substr(dni.length - 1, 1);
+                        numero = numero % 23;
+                        letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
+                        letra = letra.substring(numero, numero + 1);
+                        if (letra !== let) {
+                            
+                            alert('Identificador erroneo');
+                            validador= false;
+                        } else {
+                            validador = true;
+                        }
+                    } else {
+                        alert('Identificador erroneo, formato no válido');
+                        validador = false;
+                    }
+                
+                if(validador){
+                    return true;
+                }else{return false;}
+            }
+        </script>
 </body>
 </html>

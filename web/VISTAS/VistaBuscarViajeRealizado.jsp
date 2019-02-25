@@ -4,6 +4,8 @@
     Author     : owa_7
 --%>
 
+<%@page import="POJO.Estacion"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,9 +33,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                                <span class="sr-only">(current)</span>
+                            <a href="../ControladorTraeOrigen?id=2" class="nav-link" href="#">
+                               Viaje realizado
                             </a>
                         </li>
                         <li class="nav-item">
@@ -105,7 +106,7 @@
                 </div>
             </div>
             <!-- /.Horizontal Steppers -->
-        <h1>Hello World!</h1>
+        
         <div class="row mx-auto mb-5">
                 <div class="col w-50">
                     <!-- Material form login -->
@@ -119,29 +120,47 @@
                         <div class="card-body px-lg-5 pt-0">
 
                             <!-- Form -->
-                            <form action="../ControladorLoginPago" class="text-center" style="color: #757575;">
+                            <!-- <form action="../ControladorLoginPago" class="text-center" style="color: #757575;"> -->
 
-                                <!-- Email -->
-                                <div class="md-form">
-                                    <span>E-mail</span>
-                                    <input type="email" id="totalPasajero" name="emailLogin" class="form-control">
-                                </div>
+                                <form method="get" action="../ControladorConfirmarViaje" class="text-center border border-light p-5 bg-white animated bounceInDown" style="width: 500px">
+                                    <div class="">
+                                        <p class="h4 mb-4">Elegir viaje realizado</p>
+                                    </div>
+                                    <span>Origen</span>
+                                   
+                                    <select class="browser-default custom-select mt-1 mb-1" id="origen" name="origen" onchange="muestraDestino(this.value)" required>
+                                        <option selected="">Abre para elegir</option>
+                                        <%
+                                            List array = (List) session.getAttribute("arrayOrigen");
+                                        %>
+                                        <% for (int i = 0; i < array.size(); i++) {
+                                        %>
+                                        <option value="<%= ((Estacion) array.get(i)).getId()%>"><%= ((Estacion) array.get(i)).getNombre()%></option>
+                                        <%}%>
+                                        
+                                    </select>
 
-                                <!-- Password -->
-                                <div class="md-form">
-                                    <span>Contraseña</span>
-                                    <input type="password" id="contrasenaLogin" name="contrasenaLogin" class="form-control">
-                                </div>
-
-                                <div class="d-flex justify-content-around">
+                                    <span>Destino</span>
                                     
-                                </div>
+                                    <select class="browser-default custom-select mt-1 mb-1" name="destino" id="destino" onchange="muestraFecha()" required>
+                                        <option value="" disabled selected>Abre para elegir</option>
+                                    </select>
+                                    <span>Fecha</span>
+                                    <select class="browser-default custom-select mt-1 mb-1" name="fecha" id="fecha" onchange="muestraHora()" required>
+                                        <option value="" disabled selected>Abre para elegir</option>
+                                    </select>
+                                    <span>Hora salida</span>
+                                    <select class="browser-default custom-select mt-1 mb-1" name="horaSalida" id="horaSalida" required>
+                                        <option value="" disabled selected>Abre para elegir</option>
+                                    </select>
+                                    <button class="btn btn-info btn-block mt-2" type="submit">Finalizar</button>
 
-                                <!-- Sign in button -->
-                                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Iniciar sesión</button>
+
+                                </form>
+                                <!-- Default form subscription --> 
 
 
-                            </form>
+                            <!--</form> -->
                             <!-- Form -->
 
                         </div>
@@ -152,9 +171,7 @@
         </div>
         
         
-        <footer class="text-center navbar-dark info-color d-flex align-items-center justify-content-center" style="height: 90px">
-                <p class="text-white">IES Leonardo Da Vinci - 2019</p>
-        </footer>
+        
         </div>
         <!-- JQuery -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -165,5 +182,8 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
         <script type="text/javascript" src="JS/compiled.0.min.js"></script>
+        <script src="../JS/ajaxOrigenDestino.js" type="text/javascript"></script>
+        <script src="../JS/ajaxFechaViaje.js" type="text/javascript"></script>
+         <script src="../JS/ajaxHoraViaje.js" type="text/javascript"></script>
     </body>
 </html>

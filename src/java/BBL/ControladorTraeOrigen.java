@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,9 +46,16 @@ public class ControladorTraeOrigen extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
             try {
+                int id=0;
+                if(request.getParameter("id") != null){
+                   id =Integer.parseInt(request.getParameter("id"));
+                }
+                
+                
                 //llamamos al metodo que nos trae las estaciones de origen disponibles
                 List arrayOrigen=new Operaciones().devuelveEstacionesOrgin(SessionBuilder);
                 //guardamos el array de estaciones en sesion
@@ -66,8 +74,14 @@ public class ControladorTraeOrigen extends HttpServlet {
                 Billete billete=new Billete();
                 request.getSession().setAttribute("billete", billete);
                 
-                //redirigimos
+                
+                if(id == 2){
+                    response.sendRedirect("VISTAS/VistaBuscarViajeRealizado.jsp");
+                }else{
+                    //redirigimos
                 response.sendRedirect("VISTAS/inicio.jsp");
+                }
+                
                 
 //                Iterator it = todo.iterator();
 //                while (it.hasNext()) {
@@ -75,6 +89,9 @@ public class ControladorTraeOrigen extends HttpServlet {
 //                }
                 
             } catch (Exception e) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
+                request.setAttribute("error", e);
+                requestDispatcher.forward(request, response);
             }
             
             

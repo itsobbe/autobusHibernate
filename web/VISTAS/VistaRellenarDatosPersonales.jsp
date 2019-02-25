@@ -8,11 +8,11 @@
 <%@page import="POJO.Parametros"%>
 <%@page import="POJO.Ocupacion"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html class="h-100">
     <head>
-        <meta charset="utf-8">
+        
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
@@ -143,22 +143,22 @@
                         <div id="collapseTwo<%=i%>" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
                             <div class="card-body">
                                 <span>NIF/NIE</span>
-                                <input type="text" id="identificacion" name="identificacion<%=i%>" class="form-control mt-1 mb-1">
+                                <input type="text" id="identificacion" name="identificacion<%=i%>" class="form-control mt-1 mb-1" required>
                                 <span>Tipo identificador</span>
-                                <select name="tipo<%=i%>" class="browser-default custom-select mb-4">
+                                <select name="tipo<%=i%>" class="browser-default custom-select mb-4" required>
                                     <option value="" disabled>Elige</option>
                                     <option value="nif">NIF</option>
                                     <option value="nie">NIE</option>
                                 </select>
 
                                 <span>Nombre</span>
-                                <input type="text" id="totalPasajero" name="nombre<%=i%>" class="form-control mt-1 mb-1">
+                                <input type="text" id="totalPasajero" name="nombre<%=i%>" class="form-control mt-1 mb-1" required>
                                 <span>Apellidos</span>
-                                <input type="text" id="totalPasajero" name="apellidos<%=i%>" class="form-control mt-1 mb-1">
+                                <input type="text" id="totalPasajero" name="apellidos<%=i%>" class="form-control mt-1 mb-1" required>
 
                                 <div class="asientos d-flex d-inline-flex">
 
-
+                                    <span>Asientos</span>
                                     <!-- Default unchecked -->
                                     <%
                                         try {
@@ -168,7 +168,7 @@
 
 
                                     %>
-
+                                        
                                     <input type="checkbox" class="p-2 m-2" name="asiento<%=i%>" value="<%=j%>"
 
                                            <%
@@ -198,9 +198,7 @@
                 <!-- Accordion wrapper -->
                 <!-- cierre formulario -->
             </form>
-            <footer class="text-center navbar-dark info-color d-flex justify-content-center align-items-center mt-auto" style="height: 90px">
-                <p class="text-white">IES Leonardo Da Vinci - 2019</p>
-            </footer>
+            
         </div>
             
         <!-- JQuery -->
@@ -246,7 +244,7 @@
                             validador = true;
                         }
                     } else {
-                        alert('Pasajero ' + quien + ', Identificador erroneo, formato no v√°lido');
+                        alert('Pasajero ' + quien + ', Identificador erroneo, formato no v·lido');
                         validador = false;
                     }
                 }

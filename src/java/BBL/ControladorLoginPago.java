@@ -44,6 +44,7 @@ public class ControladorLoginPago extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             try {
@@ -59,7 +60,9 @@ public class ControladorLoginPago extends HttpServlet {
                    response.sendRedirect("VISTAS/VistaPago.jsp");
             } catch (Exception e) {
                 //si excepcion significa no existe cliente (cuando este bn todo codigo)
-                
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
+                request.setAttribute("error", e);
+                requestDispatcher.forward(request, response);
             }
 
             /* TODO output your page here. You may use following sample code. */

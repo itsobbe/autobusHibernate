@@ -40,6 +40,10 @@
         <servlet-name>ControladorConfirmarViaje</servlet-name>
         <servlet-class>BBL.ControladorConfirmarViaje</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorCargaFechasViaje</servlet-name>
+        <servlet-class>BBL.ControladorCargaFechasViaje</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ControladorConfirmarViaje</servlet-name>
         <url-pattern>/ControladorConfirmarViaje</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCargaFechasViaje</servlet-name>
+        <url-pattern>/ControladorCargaFechasViaje</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

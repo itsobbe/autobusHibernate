@@ -7,6 +7,7 @@ package BBL;
 
 import DAO.NewHibernateUtil;
 import DAO.Operaciones;
+import MODELO.ApplicationException;
 import MODELO.Salida;
 import MODELO.TrayectoHorario;
 import POJO.Viaje;
@@ -47,6 +48,7 @@ public class ControladorBuscarViaje extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             try {
@@ -87,7 +89,10 @@ public class ControladorBuscarViaje extends HttpServlet {
                 request.setAttribute("datosViaje", datosViaje);
                 requestDispatcher.forward(request, response);
 //                out.println("<h1>Servlet ControladorBuscarViaje at " + origen + destino + fecha + totalPasajero + "</h1>");
-            } catch (Exception e) {
+            } catch (ApplicationException e) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
+                request.setAttribute("error", e);
+                requestDispatcher.forward(request, response);
             }
 
             /* TODO output your page here. You may use following sample code. */

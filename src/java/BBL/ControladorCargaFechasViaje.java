@@ -7,20 +7,25 @@ package BBL;
 
 import DAO.NewHibernateUtil;
 import DAO.Operaciones;
+import MODELO.ApplicationException;
+import POJO.Viaje;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 
 /**
  *
  * @author owa_7
  */
-public class ControladorConfirmarViaje extends HttpServlet {
+public class ControladorCargaFechasViaje extends HttpServlet {
 
     private SessionFactory SessionBuilder;
 
@@ -45,28 +50,49 @@ public class ControladorConfirmarViaje extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             try {
-                //lo que intentaré es que con los ajax al final el select de la hora guarde el id del viaje en el value
-                //asi que solo recojo el id viaje
-                
-                int idViaje=Integer.parseInt(request.getParameter("horaSalida"));
-                //int idViaje=1;
-                new Operaciones().viajeRealizado(SessionBuilder,idViaje);
-            } catch (Exception e) {
+                int id = Integer.parseInt(request.getParameter("idAjax"));
+
+                List<Viaje> viajes = new Operaciones().devuelveFechasRuta(SessionBuilder, 1, 3);
+//                out.println(Hibernate.isInitialized(viajes.get(0).getHorario()));
+//                out.println(Hibernate.isInitialized(viajes.get(0).getHorario().getRuta().getEstacionByEstacionDestino()));
+
+                if (id == 1) {
+                    LocalDate anterior = null;
+                    out.print("<option value='Elige' selected disabled>Elige</option >");
+                    for (Viaje item : viajes) {
+                        LocalDate actual = LocalDate.parse(item.getFechaViaje().toString());
+                        if (anterior == null) {
+                            //out.println(item.getFechaViaje());
+                            out.print("<option value='" + item.getFechaViaje() + "'>" + item.getFechaViaje() + " </option >");
+
+                        } else {
+                            //out.println(actual.isEqual(anterior));
+                            if (actual.isEqual(anterior) == false) {
+                                out.print("<option value='" + item.getFechaViaje() + "'>" + item.getFechaViaje() + " </option >");
+
+                            }
+                        }
+                        anterior = LocalDate.parse(item.getFechaViaje().toString());
+                    }
+                } else {
+                    LocalDate elegida = LocalDate.parse(request.getParameter("fecha"));
+//                    out.print("--------------------Devolver la hora a partir de una fecha---------------------------------");
+                    out.print("<option value='Elige' selected disabled>Elige</option >");
+                    for (Viaje item : viajes) {
+                        LocalDate a = LocalDate.parse(item.getFechaViaje().toString());
+                        if (a.equals(elegida)) {
+//                            out.println(item.getHorario().getHoraSalida());
+//                            out.println(item.getId());
+                            out.print("<option value='" + item.getId() + "'>" + item.getHorario().getHoraSalida() + " </option >");
+                        }
+                    }
+                }
+
+            } catch (ApplicationException e) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
                 request.setAttribute("error", e);
                 requestDispatcher.forward(request, response);
             }
-
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorConfirmarViaje</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorConfirmarViaje at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
         }
     }
 

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +44,7 @@ public class ControladorDevuelveDestino extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             try {
@@ -52,13 +54,16 @@ public class ControladorDevuelveDestino extends HttpServlet {
 //                int id_estacion=2;
                 List <Estacion> destino = new Operaciones().devuelveDestinos(SessionBuilder, a);
 
-                
+                out.print("<option value='Elige' selected disabled>Elige</option >");
                 for (int i = 0; i < destino.size(); i++) {
                     // devolvemos una option por cada una de las localidades destino
                     out.print("<option value='" + destino.get(i).getId() + "'>" + destino.get(i).getNombre() + " </option >");
                 }
 
             } catch (Exception e) {
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
+                request.setAttribute("error", e);
+                requestDispatcher.forward(request, response);
             }
         }
     }

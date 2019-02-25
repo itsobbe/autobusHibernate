@@ -38,9 +38,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">
-                                <i class="fab fa-facebook-f"></i> Facebook
-                                <span class="sr-only">(current)</span>
+                            <a href="../ControladorTraeOrigen?id=2" class="nav-link" href="#">
+                               Viaje realizado
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,7 +74,7 @@
                                     </div>
                                     <span>Origen</span>
                                     <!-- Name -->
-                                    <select class="browser-default custom-select mt-1 mb-1" id="origen" name="origen" onchange="muestraDestino(this.value)">
+                                    <select class="browser-default custom-select mt-1 mb-1" id="origen" name="origen" onchange="muestraDestino(this.value)" required>
                                         <option value="" disabled selected>Choose your option</option>
                                         <option selected="">Abre para elegir</option>
                                         <%
@@ -89,13 +88,13 @@
 
                                     <span>Destino</span>
                                     <!-- Email -->
-                                    <select class="browser-default custom-select mt-1 mb-1" name="destino" id="destino">
+                                    <select class="browser-default custom-select mt-1 mb-1" name="destino" id="destino" required>
                                         <option value="" disabled selected>Abre para elegir</option>
                                     </select>
                                     <span>Fecha</span>
-                                    <input type="date" id="fecha" name="fecha" class="form-control mt-1 mb-1">
+                                    <input type="date" id="fecha" name="fecha" class="form-control mt-1 mb-1" required>
                                     <span>Número de pasajeros</span>
-                                    <input type="number" id="totalPasajero" name="totalPasajero" class="form-control mt-1 mb-1" min="1">
+                                    <input type="number" id="totalPasajero" name="totalPasajero" class="form-control mt-1 mb-1" min="1" required>
                                     <!-- Sign in button -->
                                     <button class="btn btn-info btn-block mt-2" type="submit">Buscar</button>
 
