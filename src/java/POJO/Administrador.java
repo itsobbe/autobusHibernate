@@ -11,16 +11,12 @@ public class Administrador  implements java.io.Serializable {
 
      private int id;
      private String nombre;
-     private byte[] contrasena;
+     private String contrasena;
 
     public Administrador() {
     }
-
-	
-    public Administrador(int id) {
-        this.id = id;
-    }
-    public Administrador(int id, String nombre, byte[] contrasena) {
+    
+    public Administrador(int id, String nombre, String contrasena) {
        this.id = id;
        this.nombre = nombre;
        this.contrasena = contrasena;
@@ -40,11 +36,11 @@ public class Administrador  implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public byte[] getContrasena() {
+    public String getContrasena() {
         return this.contrasena;
     }
     
-    public void setContrasena(byte[] contrasena) {
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
 

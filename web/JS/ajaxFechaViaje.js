@@ -3,7 +3,8 @@ function muestraHora() {
     var xmlhttp;
     
     var fecha=document.getElementById("fecha").value;
-    
+    var origen=document.getElementById("origen").value;
+    var destino=document.getElementById("destino").value;
     //alert(fecha);
     if (fecha === "") {
         document.getElementById("horaSalida").innerHTML = "";
@@ -21,6 +22,6 @@ function muestraHora() {
             document.getElementById("horaSalida").innerHTML = xmlhttp.responseText;
         }
     };
-    xmlhttp.open("GET", "/autobus_obb/ControladorCargaFechasViaje?fecha="+fecha+"&idAjax=2", true);
+    xmlhttp.open("GET", "/autobus_obb/ControladorCargaFechasViaje?fecha="+fecha+"&idAjax=2&origen="+origen+"&destino="+destino, true);
     xmlhttp.send();
 }// muestraDestinos

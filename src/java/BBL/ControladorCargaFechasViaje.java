@@ -11,6 +11,7 @@ import MODELO.ApplicationException;
 import POJO.Viaje;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -50,9 +51,17 @@ public class ControladorCargaFechasViaje extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             try {
+                int origen=0;
+                int destino=0;
                 int id = Integer.parseInt(request.getParameter("idAjax"));
-
-                List<Viaje> viajes = new Operaciones().devuelveFechasRuta(SessionBuilder, 1, 3);
+                if(request.getParameter("origen") != ""){
+                    origen= Integer.parseInt(request.getParameter("origen"));
+                }
+                if(request.getParameter("destino") != ""){
+                    destino= Integer.parseInt(request.getParameter("destino"));
+                }
+                //List<Viaje> viajes = new Operaciones().devuelveFechasRuta(SessionBuilder, 1, 3);
+                List<Viaje> viajes = new Operaciones().devuelveFechasRuta(SessionBuilder, origen, destino);
 //                out.println(Hibernate.isInitialized(viajes.get(0).getHorario()));
 //                out.println(Hibernate.isInitialized(viajes.get(0).getHorario().getRuta().getEstacionByEstacionDestino()));
 
@@ -83,7 +92,7 @@ public class ControladorCargaFechasViaje extends HttpServlet {
                         if (a.equals(elegida)) {
 //                            out.println(item.getHorario().getHoraSalida());
 //                            out.println(item.getId());
-                            out.print("<option value='" + item.getId() + "'>" + item.getHorario().getHoraSalida() + " </option >");
+                            out.print("<option value='" + item.getId() + "'>" + new SimpleDateFormat("HH:mm").format(item.getHorario().getHoraSalida()) + " </option >");
                         }
                     }
                 }

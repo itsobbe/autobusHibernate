@@ -11,7 +11,7 @@
         <property name="nombre" type="string">
             <column name="nombre" length="50" />
         </property>
-        <property name="contrasena" type="binary">
+        <property name="contrasena" type="string">
             <column name="contrasena" />
         </property>
     </class>

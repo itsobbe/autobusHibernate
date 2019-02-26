@@ -21,6 +21,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import MODELO.Salida;
 import MODELO.TrayectoHorario;
+import POJO.Administrador;
 import POJO.Cliente;
 import POJO.Ocupacion;
 import POJO.OcupacionBackup;
@@ -34,7 +35,6 @@ import POJO.ViajeroBackup;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
 /**
  *
  * @author owa_7
@@ -528,6 +528,36 @@ public class Operaciones {
         }
     }
 
+        public Administrador loginAdministrador(SessionFactory SessionBuilder, String nombre, String contrasena) throws ApplicationException {
+        Session sesion = SessionBuilder.openSession();
+        Transaction tx = null;
+        Administrador administrador = null;
+        try {
+            tx = sesion.beginTransaction();
+
+            String orden = "from Administrador where nombre=:vnombre AND contrasena=:vcontrasena";
+            Query q = sesion.createQuery(orden);
+            q.setParameter("vnombre", nombre);
+            q.setParameter("vcontrasena", contrasena);
+            administrador = (Administrador) q.uniqueResult();
+            tx.commit();
+            if (administrador != null) {
+                return administrador;
+            } else {
+                throw new ApplicationException("Error", 2, "No se ha encontrado administrador");
+            }
+        } catch (HibernateException HE) {
+            HE.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new ApplicationException("Error", 0, HE.getMessage());
+        } finally {
+            sesion.close();
+        }
+
+    }
+    
     /* ------------------------------------------------------- */
     //!---- metodo para crear localizador para reserva  ---- !
     protected String generarLocalizador() {

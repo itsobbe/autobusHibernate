@@ -44,6 +44,14 @@
         <servlet-name>ControladorCargaFechasViaje</servlet-name>
         <servlet-class>BBL.ControladorCargaFechasViaje</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorServicioDevuelveViajes</servlet-name>
+        <servlet-class>BBL.ControladorServicioDevuelveViajes</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorLoginAdministrador</servlet-name>
+        <servlet-class>BBL.ControladorLoginAdministrador</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>ControladorCargaFechasViaje</servlet-name>
         <url-pattern>/ControladorCargaFechasViaje</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorServicioDevuelveViajes</servlet-name>
+        <url-pattern>/ControladorServicioDevuelveViajes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorLoginAdministrador</servlet-name>
+        <url-pattern>/ControladorLoginAdministrador</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
