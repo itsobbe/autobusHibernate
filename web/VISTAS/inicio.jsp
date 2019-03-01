@@ -94,8 +94,8 @@
                                 </form>
                                 <!-- Default form subscription --> 
                             </div>
-                            <div class="col-xs-12">
-
+                            <div class="col-xs-12 mx-auto">
+                                <div id="c_155626d00429eaa298353f38307954e1" class="normal"></div><script type="text/javascript" src="https://www.eltiempo.es/widget/widget_loader/155626d00429eaa298353f38307954e1"></script>
                             </div>
                         </div>
 

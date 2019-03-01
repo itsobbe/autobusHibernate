@@ -52,7 +52,7 @@ public class ControladorPago extends HttpServlet {
                 Tarjeta tarjeta = new Tarjeta();
                 int cvv = Integer.parseInt(request.getParameter("cvv"));
                 //id de la tarjeta vieja pero comprobar si existe en form
-                if (request.getParameter("tarjetaVieja") != null && !request.getParameter("tarjetaVieja").equals("")) {
+                if (request.getParameter("tarjetaVieja") != null && !request.getParameter("tarjetaVieja").equals("x")) {
                     int tarjetaNueva = Integer.parseInt(request.getParameter("tarjetaVieja"));
                     tarjeta.setId(tarjetaNueva);
 

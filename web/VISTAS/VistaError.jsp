@@ -29,6 +29,7 @@
                     <div class="col">
                         <div class="alert alert-danger" role="alert">
                             <%= request.getAttribute("error")%>
+                            <br>
                             <a href="ControladorTraeOrigen">Volver a inicio</a>
                         </div>
                     </div>

@@ -25,7 +25,7 @@
 
         <!--Navbar -->
             <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
-                <a class="navbar-brand " href="ControladorTraeOrigen"><img src="CSS/imagen/finalV3.png" width="85px" height="75px" alt=""></a>
+                <a class="navbar-brand " href="../ControladorTraeOrigen"><img src="../CSS/imagen/finalV3.png" width="85px" height="75px" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
