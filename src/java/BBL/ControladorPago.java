@@ -74,7 +74,6 @@ public class ControladorPago extends HttpServlet {
                     if (LocalDate.now().isAfter(caducidad)) {
                         //si entra aqui significa que hoy es depues de la fecha dada por lo que está caducada
                         //lanzar excepción o cargar la misma página anterior?
-                        String aa = "";
                     }
                     //para guardar numero tiene que ser encriptado con aes, pero son byte... cnvertir string en byte
                     //guardar string caducidad con el día o solo mes/año
@@ -88,8 +87,6 @@ public class ControladorPago extends HttpServlet {
                 String apellidos = request.getParameter("apellidos");
 
                 //unimos cliente a tarjeta y viceversa o hacer esto en el contrlador que monta todo esto?
-//                tarjeta.setCliente(((Billete) request.getSession().getAttribute("billete")).getCliente());
-//                ((Billete) request.getSession().getAttribute("billete")).getCliente().setTarjeta(tarjeta);
                 ((Billete) request.getSession().getAttribute("billete")).setTarjeta(tarjeta);
                 //redireccion a controladorMontarObj
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("ControladorMontarObjReserva");

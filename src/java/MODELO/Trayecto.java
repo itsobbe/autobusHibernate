@@ -15,13 +15,23 @@ public class Trayecto {
     private String destino;
     private int plazasDisponibles;
     private String horaSalida;
-
-    public Trayecto(String fechaSalida, String origen, String destino, int plazasDisponibles, String horaSalida) {
+    private String precio;
+    
+    public Trayecto(String fechaSalida, String origen, String destino, int plazasDisponibles, String horaSalida,String precio) {
         this.fechaSalida = fechaSalida;
         this.origen = origen;
         this.destino = destino;
         this.plazasDisponibles = plazasDisponibles;
         this.horaSalida = horaSalida;
+        this.precio=precio;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
     }
 
     public Trayecto() {

@@ -34,7 +34,7 @@ public class ControladorServicioDevuelveViajes extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
-            
+            //PARA EJERCICIO EXÁMEN
             List<Trayecto> viajes=new OperacionesSW().devuelveViajes();
             
             for(Trayecto item: (List<Trayecto>)viajes){

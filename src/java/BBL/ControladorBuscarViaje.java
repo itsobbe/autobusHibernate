@@ -65,22 +65,15 @@ public class ControladorBuscarViaje extends HttpServlet {
                 trayecto.setIdOrigen(origen);
                 trayecto.setNumViajeros(totalPasajeros);
                 //metodo dao que devuelve viaje con los datos
-//                List<Viaje> datosViaje = new Operaciones().devuelveDatosBusquedaViajeV2(SessionBuilder, trayecto);
                 List<Viaje> datosViaje = new Operaciones().devuelveDatosBusquedaViaje(SessionBuilder,origen, destino, fecha, totalPasajeros);
 
                 for (Viaje item : datosViaje) {
                     trayecto.setOrigen(item.getHorario().getRuta().getEstacionByEstacionOrigen().getNombre());
                     trayecto.setDestino(item.getHorario().getRuta().getEstacionByEstacionDestino().getNombre());
-//                    LocalDate fechaFinal = item.getFechaViaje().toInstant()
-//                            .atZone(ZoneId.systemDefault())
-//                            .toLocalDate();
                     LocalDate fechaFinal=new java.sql.Date(item.getFechaViaje().getTime()).toLocalDate();
                     trayecto.setFechaSalida(fechaFinal);
-                    //trayecto.setNumViajeros(totalPasajeros);
                     trayecto.setSalida(new Salida(item.getHorario().getHoraSalida().toString(), item.getHorario().getRuta().getDuracion().toString(), item.getHorario().getRuta().getKilometros().toString(), item.getHorario().getRuta().getPrecio(), item.getPlazasLibres()));
                 }
-//                request.getSession().setAttribute("trayectoHorario", trayecto);
-
                 //guardamos en sesion los viajes
                 request.getSession().setAttribute("datosViaje", datosViaje);
                 request.getSession().setAttribute("numPasajeros", totalPasajeros);
@@ -88,7 +81,6 @@ public class ControladorBuscarViaje extends HttpServlet {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaMuestraDatosViaje.jsp");
                 request.setAttribute("datosViaje", datosViaje);
                 requestDispatcher.forward(request, response);
-//                out.println("<h1>Servlet ControladorBuscarViaje at " + origen + destino + fecha + totalPasajero + "</h1>");
             } catch (ApplicationException e) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
                 request.setAttribute("error", e);

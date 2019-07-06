@@ -7,27 +7,26 @@ package BBL;
 
 import DAO.NewHibernateUtil;
 import DAO.Operaciones;
-import MODELO.Billete;
-import MODELO.TrayectoHorario;
-import POJO.Estacion;
-import POJO.Parametros;
+import MODELO.ViajesRealizadosPasajero;
+import POJO.OcupacionBackup;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.hibernate.SessionFactory;
 
 /**
  *
  * @author owa_7
  */
-public class ControladorTraeOrigen extends HttpServlet {
+public class ControladorBuscarViajesRealizados extends HttpServlet {
+
     private SessionFactory SessionBuilder;
 
     /**
@@ -39,74 +38,40 @@ public class ControladorTraeOrigen extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-       @Override
+    @Override
     public void init() {
         SessionBuilder = NewHibernateUtil.getSessionFactory();
     }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             try {
-                int id=0;
-                if(request.getParameter("id") != null){
-                   id =Integer.parseInt(request.getParameter("id"));
+                // PARA EJERCICIO DE EXÁMEN
+                LocalDate origen = LocalDate.parse(request.getParameter("fechaInicio"));
+                LocalDate destino = LocalDate.parse(request.getParameter("fechaFinal"));
+                String nif = request.getParameter("nif");
+                ArrayList<ViajesRealizadosPasajero> viajes = (ArrayList) new Operaciones().devuelveViajesRealizados(SessionBuilder, origen, destino, nif);
+
+                out.println("Pasajero:  " + viajes.get(0).getNombre());
+                out.print("<br>");
+                out.println("Apellidos:  " + viajes.get(0).getApellidos());
+                out.print("<br>");
+                out.println("Fecha -------- Hora salida -------- Estacion origen -------- Estacion destino ");
+                out.print("<br>");
+                for (ViajesRealizadosPasajero item : viajes) {
+                    out.println(item.getFecha() + "--------" + item.getHoraSalida() + "--------" + item.getEstacionrigen() + "--------" + item.getEstacionDestino());
+                    out.print("<br>");
                 }
-                
-                
-                //llamamos al metodo que nos trae las estaciones de origen disponibles
-                List arrayOrigen=new Operaciones().devuelveEstacionesOrgin(SessionBuilder);
-                //guardamos el array de estaciones en sesion
-                HttpSession session=request.getSession(true);
-                session.setAttribute("arrayOrigen", arrayOrigen);
-                
-                //llamamos y guardamos en sesion a metodo que devuelve el obj parametros 
-                Parametros parametro=new Operaciones().devuelveParametros(SessionBuilder);
-                session.setAttribute("parametros", parametro);
-                
-                //creamos obj trayectoHorario y guardamos en sesion y metermos ahí los datos temporales que nos interesen
-                TrayectoHorario trayectoHorario=new TrayectoHorario();
-                session.setAttribute("trayectoHorario", trayectoHorario);
-                
-                //creamos obj billete
-                Billete billete=new Billete();
-                request.getSession().setAttribute("billete", billete);
-                
-                
-                if(id == 2){
-                    response.sendRedirect("VISTAS/VistaBuscarViajeRealizado.jsp");
-                }else{
-                    //redirigimos
-                response.sendRedirect("VISTAS/inicio.jsp");
-                }
-                
+
             } catch (Exception e) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
                 request.setAttribute("error", e);
                 requestDispatcher.forward(request, response);
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorTraeOrigen</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorTraeOrigen at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
         }
     }
 

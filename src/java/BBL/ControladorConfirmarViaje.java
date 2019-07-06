@@ -49,7 +49,6 @@ public class ControladorConfirmarViaje extends HttpServlet {
                 //asi que solo recojo el id viaje
                 
                 int idViaje=Integer.parseInt(request.getParameter("horaSalida"));
-                //int idViaje=1;
                 new Operaciones().viajeRealizado(SessionBuilder,idViaje);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
                 String msg="Se ha completado el viaje con éxito";
@@ -57,7 +56,6 @@ public class ControladorConfirmarViaje extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("VISTAS/VistaExito.jsp");
                 requestDispatcher.forward(request, response);
                 
-//                response.sendRedirect("Vistas/VistaExito.jsp?");
             } catch (Exception e) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
                 request.setAttribute("error", e);

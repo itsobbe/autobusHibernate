@@ -46,14 +46,9 @@ public class ControladorLoginAdministrador extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             try {
-//                String nombre=request.getParameter("nombre");
-//                String contrasena=Hash.sha1(request.getParameter("contrasena"));
                 String nombre="oualid";
                 String contrasena=Hash.sha1("oualid");
                 Administrador administrador = new Operaciones().loginAdministrador(SessionBuilder, nombre, contrasena);
-                //redirigimos a la vista formulario viaje finalizado
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaPago.jsp");
-//                requestDispatcher.forward(request, response);
                 response.sendRedirect("ControladorTraeOrigen?id=2");
             } catch (Exception e) {
                 //si excepcion significa no existe cliente (cuando este bn todo codigo)

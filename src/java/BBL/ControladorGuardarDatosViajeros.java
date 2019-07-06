@@ -66,13 +66,9 @@ public class ControladorGuardarDatosViajeros extends HttpServlet {
                 //recogemos varibale sesion Billete donde ya guardar datos importante
                 Billete billete=(Billete)request.getSession().getAttribute("billete");
                 billete.setViajero(viajeros);
-                //request.getSession().setAttribute("billete", billete);
-
                 
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaResumenCompra.jsp");
-                requestDispatcher.forward(request, response);
-//                  response.sendRedirect("VISTAS/VistaResumenCompra.jsp");
-                
+                requestDispatcher.forward(request, response);                
             } catch (Exception e) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");
                 request.setAttribute("error", e);

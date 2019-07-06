@@ -69,7 +69,6 @@ public class ControladorMontarObjReserva extends HttpServlet {
 
                 reserva.setFechaPago(java.sql.Date.valueOf(LocalDate.now()));
                 //generamos localizador en DAO
-                //reserva.setLocalizador(12334455);
                 reserva.setNumViajeros(billete.getViajero().size());
                 reserva.setViaje(billete.getViaje());
                 reserva.setTarjeta(billete.getTarjeta());

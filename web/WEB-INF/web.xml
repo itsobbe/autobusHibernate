@@ -52,6 +52,10 @@
         <servlet-name>ControladorLoginAdministrador</servlet-name>
         <servlet-class>BBL.ControladorLoginAdministrador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorBuscarViajesRealizados</servlet-name>
+        <servlet-class>BBL.ControladorBuscarViajesRealizados</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorTraeOrigen</servlet-name>
         <url-pattern>/ControladorTraeOrigen</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>ControladorLoginAdministrador</servlet-name>
         <url-pattern>/ControladorLoginAdministrador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorBuscarViajesRealizados</servlet-name>
+        <url-pattern>/ControladorBuscarViajesRealizados</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

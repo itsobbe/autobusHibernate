@@ -51,7 +51,7 @@
         <div class="bg img-fluid h-100 d-flex flex-column">
             <!--Navbar -->
             <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
-                <a class="navbar-brand " href="../ControladorTraeOrigen"><img src="../CSS/imagen/finalV3.png" width="85px" height="75px" alt=""></a>
+                <a class="navbar-brand " href="ControladorTraeOrigen"><img src="CSS/imagen/finalV3.png" width="85px" height="75px" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
                         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -59,7 +59,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a href="../VISTAS/VistaLoginAdministrador.jsp" class="nav-link" href="#">
+                            <a href="/autobus_obb/VISTAS/VistaLoginAdministrador.jsp" class="nav-link" href="#">
                                Viaje realizado
                             </a>
                         </li>

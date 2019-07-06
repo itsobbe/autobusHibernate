@@ -21,6 +21,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import MODELO.Salida;
 import MODELO.TrayectoHorario;
+import MODELO.ViajesRealizadosPasajero;
 import POJO.Administrador;
 import POJO.Cliente;
 import POJO.Ocupacion;
@@ -35,6 +36,7 @@ import POJO.ViajeroBackup;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
 /**
  *
  * @author owa_7
@@ -51,8 +53,6 @@ public class Operaciones {
             //Orden que trae estaciones como origen no repetidas en ruta
             //select distinct r.estacionByEstacionOrigen from Ruta r
             String orden = "From Estacion";
-//            String orden="from Ruta r where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=2";
-//            String orden="from Ruta r,Viaje v where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=2 AND v.fechaViaje='2019-01-17'";
             Query rs = sesion.createQuery(orden);
 
             todo = rs.list();
@@ -82,7 +82,6 @@ public class Operaciones {
         Transaction tx = null;
         Session sesion = SessionBuilder.openSession();
         ArrayList<Estacion> array = new ArrayList();
-        //Estacion estacion=null;
         try {
             tx = sesion.beginTransaction();
             //orden para devolver objeto estacion destino segun estacion origen
@@ -91,11 +90,6 @@ public class Operaciones {
             Query rs = sesion.createQuery(orden);
             rs.setParameter("vid", id);
             List<Estacion> estacion = rs.list();
-
-//            Iterator it = estacion.getRutasForEstacionOrigen().iterator();
-//            while (it.hasNext()) {
-//                array.add(((Ruta)it.next()).getEstacionByEstacionDestino());
-//            }
             tx.commit();
 
             return estacion;
@@ -118,14 +112,6 @@ public class Operaciones {
 
         try {
             tx = sesion.beginTransaction();
-            //Orden que trae estaciones como origen no repetidas en ruta
-            //select distinct r.estacionByEstacionOrigen from Ruta r
-//            String orden = "From Estacion";
-//            String orden="from Ruta r where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=2";
-//            String orden="SELECT r, v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen=1 AND r.estacionByEstacionDestino=3 AND v.fechaViaje='2019-01-17' AND h = v.horario AND h.ruta=r";
-//            String orden="from Ruta r,Viaje v where r.estacionByEstacionOrigen='"+origen+"' AND r.estacionByEstacionDestino='"+destino+"' AND v.fechaViaje='"+fecha+"' AND h = v.horario AND h.ruta=r";
-            //String orden = "SELECT v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen='" + origen + "' AND r.estacionByEstacionDestino='" + destino + "' AND v.fechaViaje='" + fecha + "' AND h = v.horario AND h.ruta=r AND v.plazasLibres >='" + totalPasaejeros + "'";
-            //quitado ,r
             String orden = "SELECT v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen=:vorigen AND r.estacionByEstacionDestino=:vdestino AND v.fechaViaje=:vfecha AND h = v.horario AND h.ruta=r AND v.plazasLibres >= :vtotal";
 
             Query rs = sesion.createQuery(orden);
@@ -134,7 +120,7 @@ public class Operaciones {
             rs.setDate("vfecha", java.sql.Date.valueOf(fecha));
             rs.setParameter("vtotal", totalPasaejeros);
             todo = rs.list();
-            if(todo.size() < 1){
+            if (todo.size() < 1) {
                 throw new ApplicationException("Error buscando viajes", 0, "Viajes no encontrados");
             }
             for (Viaje item : todo) {
@@ -207,7 +193,6 @@ public class Operaciones {
         try {
             tx = sesion.beginTransaction();
             String orden = "select o.asiento from Ocupacion o where o.reserva IN (select r from Reserva r where r.viaje.id=:vid)";
-//            String orden="SELECT r, v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen='"+origen+"' AND r.estacionByEstacionDestino='"+destino+"' AND v.fechaViaje='"+fecha+"' AND h = v.horario AND h.ruta=r AND v.plazasLibres >='"+totalPasaejeros+"'";
             Query rs = sesion.createQuery(orden);
             rs.setParameter("vid", idViaje);
             todo = rs.list();
@@ -242,18 +227,9 @@ public class Operaciones {
         try {
             tx = sesion.beginTransaction();
             String orden = "from Ruta r where r.estacionByEstacionOrigen = 1";
-//            String orden="SELECT r, v from Ruta r,Viaje v,Horario h where r.estacionByEstacionOrigen='"+origen+"' AND r.estacionByEstacionDestino='"+destino+"' AND v.fechaViaje='"+fecha+"' AND h = v.horario AND h.ruta=r AND v.plazasLibres >='"+totalPasaejeros+"'";
             Query rs = sesion.createQuery(orden);
 
             List<Ruta> todo = rs.list();
-//            Iterator it = todo.iterator();
-//            //Ruta ruta=new Ruta();
-//            while (it.hasNext()) {
-//                Ruta ruta=(Ruta)it.next();
-//                Estacion estacion=(Estacion)sesion.get(Estacion.class, ruta.getEstacionByEstacionDestino().getId());
-//                ruta.setEstacionByEstacionDestino(estacion);
-//            }
-//            Estacion a=(Estacion)sesion.load(Estacion.class, todo.get(0).getEstacionByEstacionDestino());
             for (Ruta item : todo) {
                 Estacion estacion = (Estacion) sesion.load(Estacion.class, item.getEstacionByEstacionDestino().getId());
                 item.setEstacionByEstacionDestino(estacion);
@@ -342,14 +318,7 @@ public class Operaciones {
                 Query orden = sesion.createQuery("from Viajero v where v.identificador=:vnumero");
                 orden.setParameter("vnumero", item.getViajero().getIdentificador());
                 if (orden.uniqueResult() != null) {
-//                        reserva.setTarjeta((Tarjeta) orden.uniqueResult());
                     Viajero viajeroPersistent = (Viajero) orden.uniqueResult();
-//                    if (sesion.contains(viajeroPersistent)) {
-//                        sesion.evict(viajeroPersistent);
-//                    }
-                    //Integer idPersistent=(Integer)orden.uniqueResult();
-                    //item.getViajero().setId(idPersistent);
-                    //sesion.merge(item.getViajero());
                     viajeroPersistent.setApellidos(item.getViajero().getApellidos());
                     viajeroPersistent.setIdentificador(item.getViajero().getIdentificador());
                     viajeroPersistent.setNombre(item.getViajero().getNombre());
@@ -374,7 +343,6 @@ public class Operaciones {
 
             //generamos localizador
             reserva.setLocalizador(generarLocalizador());
-            // reserva.getViaje().setPlazasLibres(reserva.getViaje().getPlazasLibres()-reserva.getNumViajeros());
             sesion.saveOrUpdate(reserva);
 
             Viaje viajeActualizar = (Viaje) sesion.get(Viaje.class, reserva.getViaje().getId());
@@ -417,7 +385,6 @@ public class Operaciones {
 
                 //aqui podria poner save de reserva
                 for (Ocupacion itemOcupacion : (Set<Ocupacion>) item.getOcupacions()) {
-                    // Hibernate.initialize(itemOcupacion);
                     viajeroup = new ViajeroBackup(itemOcupacion.getViajero().getTipoIdentificador(), itemOcupacion.getViajero().getIdentificador(), itemOcupacion.getViajero().getNombre(), itemOcupacion.getViajero().getApellidos());
                     Query q = sesion.createQuery("from ViajeroBackup where identificador = :viden");
                     q.setParameter("viden", viajeroup.getIdentificador());
@@ -436,25 +403,11 @@ public class Operaciones {
 
                         viajeroBackup.add(viajeroup);
                         ocupacionBackup.add(new OcupacionBackup(reservaobj, viajeroup, itemOcupacion.getAsiento(), itemOcupacion.getImporte()));
-                        
 
-//                        ViajeroBackup viajeroPersistidoId=(ViajeroBackup)sesion.save(viajeroup);
-//                         ViajeroBackup viajeroPersistido=(ViajeroBackup)sesion.get(ViajeBackup.class, viajeroPersistidoId);
-//                        ocupacionBackup.add(new OcupacionBackup(reservaobj, viajeroPersistido, itemOcupacion.getAsiento(), itemOcupacion.getImporte()));
                     }
 
-                    //aqui haria set a vijaero back up con obj ocupacion y a vaijero bckup igual con set ocup
-                    //borro del obj viaje los viajeros que tienen mas de una ocupacion
-                    //queria borrar los vijaeros dle obj viaje pero debido a hacer en la transaccion 
-                    //pongo en ocup en viajero cascade todo menos delete y asi los viajeros los borro a mano aqui
-//                    if (itemOcupacion.getViajero().getOcupacions().size() == 1) {
-//                        sesion.delete(itemOcupacion.getViajero());
-//                        
-//                        //item.getOcupacions().remove(itemOcupacion.getViajero());
-//                    }
-                    //aqui podria save ocupacion y save viajero si toca o save or update
                 }
-                
+
                 //meto al obj reserva backup la ocupa backup para unirlos
                 reservaobj.setOcupacionBackups(new HashSet(ocupacionBackup));
                 //meto en array de reservas
@@ -528,7 +481,7 @@ public class Operaciones {
         }
     }
 
-        public Administrador loginAdministrador(SessionFactory SessionBuilder, String nombre, String contrasena) throws ApplicationException {
+    public Administrador loginAdministrador(SessionFactory SessionBuilder, String nombre, String contrasena) throws ApplicationException {
         Session sesion = SessionBuilder.openSession();
         Transaction tx = null;
         Administrador administrador = null;
@@ -557,7 +510,56 @@ public class Operaciones {
         }
 
     }
-    
+
+    public List<ViajesRealizadosPasajero> devuelveViajesRealizados(SessionFactory SessionBuilder, LocalDate origen, LocalDate destino, String nif) throws ApplicationException {
+        //devuelve viaje y de ahi se extraen las fechas de una ruta
+        Session sesion = SessionBuilder.openSession();
+        Transaction tx = null;
+        List<OcupacionBackup> viajes;
+        ArrayList<ViajesRealizadosPasajero> viajesRealizados = new ArrayList();
+        try {
+            tx = sesion.beginTransaction();
+
+            String orden = "FROM OcupacionBackup co where co.viajeroBackup.identificador=:vnif and co.reservaBackup.viajeBackup.fechaViaje between :vorigen and :vdestino";
+
+            Query rs = sesion.createQuery(orden);
+            rs.setParameter("vorigen", java.sql.Date.valueOf(origen));
+            rs.setParameter("vdestino", java.sql.Date.valueOf(destino));
+            rs.setParameter("vnif", nif);
+
+            viajes = rs.list();
+
+            if (viajes.size() == 0) {
+                throw new ApplicationException("Error buscando viajes", 0, "No se han encontrado viajes realizados");
+            }
+
+            for (OcupacionBackup item : viajes) {
+                Hibernate.initialize(item.getReservaBackup());
+                Hibernate.initialize(item.getViajeroBackup());
+                Hibernate.initialize(item.getReservaBackup().getViajeBackup());
+                Hibernate.initialize(item.getReservaBackup().getViajeBackup().getHorario());
+                Hibernate.initialize(item.getReservaBackup().getViajeBackup().getHorario().getRuta().getEstacionByEstacionDestino());
+                Hibernate.initialize(item.getReservaBackup().getViajeBackup().getHorario().getRuta().getEstacionByEstacionOrigen());
+            }
+
+            for (OcupacionBackup item : viajes) {
+                viajesRealizados.add(new ViajesRealizadosPasajero(item.getViajeroBackup().getNombre(), item.getViajeroBackup().getApellidos(), item.getReservaBackup().getViajeBackup().getHorario().getHoraSalida().toString(), item.getReservaBackup().getViajeBackup().getHorario().getRuta().getEstacionByEstacionOrigen().getNombre(), item.getReservaBackup().getViajeBackup().getHorario().getRuta().getEstacionByEstacionDestino().getNombre(), item.getReservaBackup().getViajeBackup().getFechaViaje().toString()));
+
+            }
+
+            tx.commit();
+            return viajesRealizados;
+        } catch (HibernateException HE) {
+            HE.printStackTrace();
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new ApplicationException(HE.getLocalizedMessage(), 0, HE.getMessage());
+        } finally {
+            sesion.close();
+        }
+    }
+
     /* ------------------------------------------------------- */
     //!---- metodo para crear localizador para reserva  ---- !
     protected String generarLocalizador() {

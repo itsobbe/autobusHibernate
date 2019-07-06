@@ -49,21 +49,18 @@ public class ControladorCargaFechasViaje extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-
+            //PARA EJERCICIO EXÁMEN
             try {
-                int origen=0;
-                int destino=0;
+                int origen = 0;
+                int destino = 0;
                 int id = Integer.parseInt(request.getParameter("idAjax"));
-                if(request.getParameter("origen") != ""){
-                    origen= Integer.parseInt(request.getParameter("origen"));
+                if (request.getParameter("origen") != "") {
+                    origen = Integer.parseInt(request.getParameter("origen"));
                 }
-                if(request.getParameter("destino") != ""){
-                    destino= Integer.parseInt(request.getParameter("destino"));
+                if (request.getParameter("destino") != "") {
+                    destino = Integer.parseInt(request.getParameter("destino"));
                 }
-                //List<Viaje> viajes = new Operaciones().devuelveFechasRuta(SessionBuilder, 1, 3);
                 List<Viaje> viajes = new Operaciones().devuelveFechasRuta(SessionBuilder, origen, destino);
-//                out.println(Hibernate.isInitialized(viajes.get(0).getHorario()));
-//                out.println(Hibernate.isInitialized(viajes.get(0).getHorario().getRuta().getEstacionByEstacionDestino()));
 
                 if (id == 1) {
                     LocalDate anterior = null;
@@ -71,27 +68,21 @@ public class ControladorCargaFechasViaje extends HttpServlet {
                     for (Viaje item : viajes) {
                         LocalDate actual = LocalDate.parse(item.getFechaViaje().toString());
                         if (anterior == null) {
-                            //out.println(item.getFechaViaje());
                             out.print("<option value='" + item.getFechaViaje() + "'>" + item.getFechaViaje() + " </option >");
 
                         } else {
-                            //out.println(actual.isEqual(anterior));
                             if (actual.isEqual(anterior) == false) {
                                 out.print("<option value='" + item.getFechaViaje() + "'>" + item.getFechaViaje() + " </option >");
-
                             }
                         }
                         anterior = LocalDate.parse(item.getFechaViaje().toString());
                     }
                 } else {
                     LocalDate elegida = LocalDate.parse(request.getParameter("fecha"));
-//                    out.print("--------------------Devolver la hora a partir de una fecha---------------------------------");
                     out.print("<option value='Elige' selected disabled>Elige</option >");
                     for (Viaje item : viajes) {
                         LocalDate a = LocalDate.parse(item.getFechaViaje().toString());
                         if (a.equals(elegida)) {
-//                            out.println(item.getHorario().getHoraSalida());
-//                            out.println(item.getId());
                             out.print("<option value='" + item.getId() + "'>" + new SimpleDateFormat("HH:mm").format(item.getHorario().getHoraSalida()) + " </option >");
                         }
                     }

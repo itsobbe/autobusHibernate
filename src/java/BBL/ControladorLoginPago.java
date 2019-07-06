@@ -53,11 +53,7 @@ public class ControladorLoginPago extends HttpServlet {
                 Cliente cliente = new Operaciones().login(SessionBuilder, email, contrasena);
                 //guardar en sesion billete
                 ((Billete)request.getSession().getAttribute("billete")).setCliente(cliente);
-                //out.print(cliente.getApellido());
-                //redirigimos a la vista formulario pago
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaPago.jsp");
-//                requestDispatcher.forward(request, response);
-                   response.sendRedirect("VISTAS/VistaPago.jsp");
+                response.sendRedirect("VISTAS/VistaPago.jsp");
             } catch (Exception e) {
                 //si excepcion significa no existe cliente (cuando este bn todo codigo)
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");

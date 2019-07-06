@@ -37,11 +37,11 @@ public class servicio {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "devuelveViajesV2")
-    public void devuelveViajesV2() {
-        //List<Trayecto> trayectos=new Operaciones().devuelveViajes();
+    @WebMethod(operationName = "devuelveViajesSegunPrecio")
+    public List<Trayecto> devuelveViajesSegunPrecio(@WebParam(name = "precio") Double precio) {
+        List<Trayecto> trayectos=new OperacionesSW().devuelveViajesSegunPrecio(precio);
         
-        //return trayectos;
+        return trayectos;
     }
     
 }

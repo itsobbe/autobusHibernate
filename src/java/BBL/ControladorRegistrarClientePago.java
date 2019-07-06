@@ -56,9 +56,6 @@ public class ControladorRegistrarClientePago extends HttpServlet {
                 billete.setCliente(cliente);
                 
                 response.sendRedirect("VISTAS/VistaPago.jsp");
-                //redirigimos a la vista formulario pago
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaPago.jsp");
-//                requestDispatcher.forward(request, response);
                 
             } catch (Exception e) {
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("VISTAS/VistaError.jsp");

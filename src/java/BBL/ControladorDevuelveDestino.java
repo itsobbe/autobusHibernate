@@ -48,12 +48,8 @@ public class ControladorDevuelveDestino extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             try {
-//                String id_estacion_s = request.getParameter("origen");
-//                int id_estacion = Integer.parseInt(id_estacion_s);
                 int a=Integer.parseInt(request.getParameter("origen"));
-//                int id_estacion=2;
                 List <Estacion> destino = new Operaciones().devuelveDestinos(SessionBuilder, a);
-
                 out.print("<option value='Elige' selected disabled>Elige</option >");
                 for (int i = 0; i < destino.size(); i++) {
                     // devolvemos una option por cada una de las localidades destino

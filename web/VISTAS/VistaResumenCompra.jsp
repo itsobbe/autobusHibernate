@@ -177,23 +177,5 @@
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
         <script type="text/javascript" src="JS/compialed.0.min.js"></script>
-        <script>
-            /* function footerAlign() {
-  $('footer').css('display', 'block');
-  $('footer').css('height', 'auto');
-  var footerHeight = $('footer').outerHeight();
-  $('body').css('padding-bottom', footerHeight);
-  $('footer').css('height', footerHeight);
-}
-
-
-$(document).ready(function(){
-  footerAlign();
-});
-
-$( window ).resize(function() {
-  footerAlign();
-});*/
-        </script>
     </body>
 </html>

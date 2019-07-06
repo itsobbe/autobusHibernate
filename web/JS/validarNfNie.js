@@ -26,6 +26,3 @@ function validate(value){
 
   return false;
 }
-
-validate('12345678Z');  //true - "nif"
-validate('X9464187D');  //true - "nie"

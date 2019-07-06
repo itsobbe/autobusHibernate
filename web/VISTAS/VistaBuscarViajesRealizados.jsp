@@ -1,15 +1,12 @@
 <%-- 
-    Document   : inicio
-    Created on : 15-ene-2019, 16:07:18
+    Document   : VistaBuscarViajesRealizados
+    Created on : 08-mar-2019, 9:26:41
     Author     : owa_7
 --%>
 
-<%@page import="POJO.Estacion"%>
-<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -38,11 +35,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a href="VistaBuscarViajesRealizados.jsp" class="nav-link" href="#">
-                               Viajes realizados EXAMEN
-                            </a>
-                        </li>
-                        <li class="nav-item active">
                             <a href="VistaLoginAdministrador.jsp" class="nav-link" href="#">
                                Viaje realizado
                             </a>
@@ -65,33 +57,17 @@
                         <div class="row">
                             <div class="col-xs-12 mt-3 d-flex">
                                 <!-- Default form subscription -->
-                                <form method="get" action="../ControladorBuscarViaje" class="text-center border border-light p-5 bg-white animated bounceInDown" style="width: 500px">
+                                <form method="get" action="../ControladorBuscarViajesRealizados" class="text-center border border-light p-5 bg-white animated bounceInDown" style="width: 500px">
                                     <div class="">
-                                        <p class="h4 mb-4">¡Reserva tu billete ya!</p>
+                                        <p class="h4 mb-4">Busca viajes realizados</p>
                                     </div>
-                                    <span>Origen</span>
-                                    <!-- Name -->
-                                    <select class="browser-default custom-select mt-1 mb-1" id="origen" name="origen" onchange="muestraDestino(this.value)" required>
-                                        <option value="" disabled selected>Choose your option</option>
-                                        <option selected="">Abre para elegir</option>
-                                        <%
-                                            List array = (List) session.getAttribute("arrayOrigen");
-                                        %>
-                                        <% for (int i = 0; i < array.size(); i++) {
-                                        %>
-                                        <option value="<%= ((Estacion) array.get(i)).getId()%>"><%= ((Estacion) array.get(i)).getNombre()%></option>
-                                        <%}%>
-                                    </select>
 
-                                    <span>Destino</span>
-                                    <!-- Email -->
-                                    <select class="browser-default custom-select mt-1 mb-1" name="destino" id="destino" required>
-                                        <option value="" disabled selected>Abre para elegir</option>
-                                    </select>
-                                    <span>Fecha</span>
-                                    <input type="date" id="fecha" name="fecha" class="form-control mt-1 mb-1" required>
-                                    <span>Número de pasajeros</span>
-                                    <input type="number" id="totalPasajero" name="totalPasajero" class="form-control mt-1 mb-1" min="1" required>
+                                    <span>Fecha inicio</span>
+                                    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control mt-1 mb-1" required>
+                                     <span>Fecha fin</span>
+                                    <input type="date" id="fechaFinal" name="fechaFinal" class="form-control mt-1 mb-1" required>
+                                    <span>NIF</span>
+                                    <input type="text" id="nif" name="nif" class="form-control mt-1 mb-1" required>
                                     <!-- Sign in button -->
                                     <button class="btn btn-info btn-block mt-2" type="submit">Buscar</button>
 
@@ -100,7 +76,6 @@
                                 <!-- Default form subscription --> 
                             </div>
                             <div class="col-xs-12 mx-auto">
-                                <div id="c_155626d00429eaa298353f38307954e1" class="normal"></div><script type="text/javascript" src="https://www.eltiempo.es/widget/widget_loader/155626d00429eaa298353f38307954e1"></script>
                             </div>
                         </div>
 
@@ -124,6 +99,5 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.1/js/mdb.min.js"></script>
-        <script src="../JS/ajaxOrigenDestino.js" type="text/javascript"></script>
     </body>
 </html>
