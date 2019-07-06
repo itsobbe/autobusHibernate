@@ -1,4 +1,4 @@
-# Aplicación Web Línea de Autobuses
+# Aplicación Web Línea de Autobuses con Hibernate
 
 ## Objetivos:
 * Diseñar y codificar un sitio web que permita gestionar la compra de billetes de una compañía de autobuses.
